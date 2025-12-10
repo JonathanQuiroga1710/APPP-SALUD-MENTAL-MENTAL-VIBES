@@ -10,6 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- PWA: Manifest e instalación -->
+  <meta name="theme-color" content="#062733">
+  <link rel="manifest" href="manifest.json">
+
+  
   <style>
     :root {
       --bg-app: #062733;
@@ -571,6 +576,15 @@
     // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
     // (no es necesario aquí porque solo se carga al abrirla)
   </script>
-
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("service-worker.js")
+          .then(reg => console.log("Service worker registrado:", reg.scope))
+          .catch(err => console.error("Error al registrar SW:", err));
+      });
+    }
+  </script>
 </body>
 </html>
