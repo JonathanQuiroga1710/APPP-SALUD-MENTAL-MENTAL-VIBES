@@ -384,7 +384,8 @@
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
               <div class="icon-btn" onclick="openSpotify()">🎧</div>
               <div class="icon-btn" onclick="openScreen('juegoInfo')">🎮</div>
-              <div class="icon-btn" onclick="openScreen('juegoAbrir')">🎮</div>
+              <div class="icon-btn" onclick="openScreen('juegoAbrir')">🏰</div>
+
 
             </div>
             <p class="bottom-caption">
@@ -536,34 +537,29 @@
     </p>
   </div>
 </div>
-   <!-- PANTALLA JUEGO - SOLO BOTÓN PARA ABRIR -->
+   <!-- PANTALLA JUEGO - ABRIR CLASH ROYALE -->
 <div id="screen-juegoAbrir" class="screen">
   <div class="screen-header">
     <button class="back-btn" onclick="openScreen('home')">←</button>
-    <span>Abrir juego</span>
+    <span>Abrir Clash Royale</span>
   </div>
   <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
-    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">
-      Pulsa el botón para abrir el minijuego creado en Godot.
+    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px; max-width:260px;">
+      Pulsa el botón para abrir Clash Royale. Si no lo tienes instalado, se abrirá la página en Google Play.
     </p>
 
     <div style="margin-bottom:18px;">
-      <!-- Icono grande que abre la app -->
-      <div class="icon-btn" style="font-size:1.8rem;" onclick="openGameApp()">
-        🎮
+      <div class="icon-btn" style="font-size:1.8rem;" onclick="openClashRoyale()">
+        🏰
       </div>
     </div>
 
-    <!-- Botón principal que también abre la app -->
-    <button class="btn-main" onclick="openGameApp()">
-      Abrir juego 🎮
+    <button class="btn-main" onclick="openClashRoyale()">
+      Abrir Clash Royale 🎮
     </button>
-
-    <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px; max-width:260px;">
-      Asegúrate de tener el juego ya instalado en tu celular Android. Si no se abre, revisa que la app esté instalada correctamente.
-    </p>
   </div>
 </div>
+
 
 
     </div>
@@ -672,15 +668,37 @@
      function openGameDownload() {
    window.open("https://drive.google.com/uc?export=download&id=1QwGdqa8rK4WSEJWY3bKP25gqo7JQli1j", "_blank");
 }
-    function openGameApp() {
+    
+    function openClashRoyale() {
+  const pkg = "com.supercell.clashroyale";
+
   const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   if (isAndroid) {
-    // Intent para abrir directamente la app instalada
+    // Intento abrir la app instalada
     window.location.href =
-      "intent://#Intent;package=org.godot.projecto_avioncito;scheme=android-app;end";
-  } else {
-    alert("Este botón solo funciona en celulares Android con el juego instalado.");
+      "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
+
+    // Si no se abre, enviar a Play Store
+    setTimeout(() => {
+      window.location.href =
+        "https://play.google.com/store/apps/details?id=" + pkg;
+    }, 1500);
+  }
+
+  else if (isIOS) {
+    // En iOS, solo App Store funciona
+    window.location.href =
+      "https://apps.apple.com/app/clash-royale/id1053012308";
+  }
+
+  else {
+    // Para PC u otros sistemas
+    window.open(
+      "https://play.google.com/store/apps/details?id=" + pkg,
+      "_blank"
+    );
   }
 }
 
