@@ -383,6 +383,8 @@
               <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
               <div class="icon-btn" onclick="openSpotify()">🎧</div>
+              <div class="icon-btn" onclick="openScreen('juegoInfo')">🎮</div>
+
             </div>
             <p class="bottom-caption">
               Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo
@@ -485,6 +487,55 @@
           </ul>
         </div>
       </div>
+            <!-- PANTALLA JUEGO - INSTRUCCIONES -->
+<div id="screen-juegoInfo" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('home')">←</button>
+    <span>Mini juego MentalVibes</span>
+  </div>
+  <div class="screen-content">
+    <ul class="tips-list">
+      <li>1. Pulsa el botón <strong>"Descargar juego"</strong> en el siguiente paso.</li>
+      <li>2. Espera a que termine la descarga del archivo <strong>.apk</strong>.</li>
+      <li>3. Abre el archivo descargado desde la barra de notificaciones o la carpeta de descargas.</li>
+      <li>4. Si el sistema lo pide, permite la instalación desde este origen.</li>
+      <li>5. Una vez instalado, busca el juego en tu menú de aplicaciones y ábrelo.</li>
+    </ul>
+
+    <div style="margin-top: 16px;">
+      <button class="btn-main" onclick="openScreen('juegoLink')">
+        Continuar a descarga del juego 🎮
+      </button>
+    </div>
+  </div>
+</div>
+    <!-- PANTALLA JUEGO - DESCARGA / ENLACE -->
+<div id="screen-juegoLink" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('juegoInfo')">←</button>
+    <span>Descargar / abrir juego</span>
+  </div>
+  <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
+    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">
+      Al pulsar el botón se abrirá la página o descarga del minijuego creado en Godot.
+    </p>
+
+    <div style="margin-bottom:18px;">
+      <div class="icon-btn" style="font-size:1.8rem;" onclick="openGameDownload()">
+        🎮
+      </div>
+    </div>
+
+    <button class="btn-main" onclick="openGameDownload()">
+      Descargar / abrir juego
+    </button>
+
+    <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;">
+      Después de instalarlo, búscalo en tu menú de apps para jugar.
+    </p>
+  </div>
+</div>
+
 
     </div>
 
@@ -519,6 +570,13 @@
         case 'ritmo':
           document.getElementById('screen-ritmo').classList.add('active');
           break;
+        case 'juegoInfo':
+          document.getElementById('screen-juegoInfo').classList.add('active');
+          break;
+        case 'juegoLink':
+          document.getElementById('screen-juegoLink').classList.add('active');
+          break;
+
       }
     }
 
@@ -577,6 +635,11 @@
   // Enlace a Spotify general
   window.open("https://open.spotify.com/", "_blank");
 }
+     function openGameDownload() {
+   window.open("https://drive.google.com/uc?export=download&id=1QwGdqa8rK4WSEJWY3bKP25gqo7JQli1j", "_blank");
+}
+
+
     // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
     // (no es necesario aquí porque solo se carga al abrirla)
   </script>
