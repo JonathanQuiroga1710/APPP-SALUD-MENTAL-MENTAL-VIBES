@@ -384,6 +384,7 @@
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
               <div class="icon-btn" onclick="openSpotify()">🎧</div>
               <div class="icon-btn" onclick="openScreen('juegoInfo')">🎮</div>
+              <div class="icon-btn" onclick="openScreen('juegoAbrir')">🎮</div>
 
             </div>
             <p class="bottom-caption">
@@ -535,6 +536,32 @@
     </p>
   </div>
 </div>
+    <!-- PANTALLA JUEGO - SOLO BOTÓN PARA ABRIR -->
+<div id="screen-juegoAbrir" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('home')">←</button>
+    <span>Abrir juego</span>
+  </div>
+  <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
+    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">
+      Pulsa el botón para abrir o descargar el minijuego creado en Godot.
+    </p>
+
+    <div style="margin-bottom:18px;">
+      <div class="icon-btn" style="font-size:1.8rem;" onclick="openGameDownload()">
+        🎮
+      </div>
+    </div>
+
+    <button class="btn-main" onclick="openGameDownload()">
+      Abrir / descargar juego 🎮
+    </button>
+
+    <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px; max-width:260px;">
+      Si es la primera vez, se descargará el archivo .apk. Después de instalarlo, podrás abrirlo desde el menú de aplicaciones de tu celular.
+    </p>
+  </div>
+</div>
 
 
     </div>
@@ -576,6 +603,10 @@
         case 'juegoLink':
           document.getElementById('screen-juegoLink').classList.add('active');
           break;
+        case 'juegoAbrir':
+          document.getElementById('screen-juegoAbrir').classList.add('active');
+          break;
+
 
       }
     }
