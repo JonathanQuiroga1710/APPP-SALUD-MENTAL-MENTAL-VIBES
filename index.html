@@ -603,24 +603,25 @@
        window.open("https://open.spotify.com/playlist/4cIQ7fEAGZ5yAQ0sGQOc96?si=h7w6VGlQT6-xlVqOBqo8IQ&pi=y6v9Sw_jS4WsR", "_blank");
 }
     function openClashRoyale() {
-  const pkg = "com.supercell.clashroyale";
-  const isAndroid = /Android/i.test(navigator.userAgent);
+        const pkg = "com.supercell.clashroyale";
+        const isAndroid = /Android/i.test(navigator.userAgent);
 
-  if (isAndroid) {
+        if (isAndroid) {
     // Intento abrir la app directamente (solo Android + Chrome)
-    window.location.href =
-      "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
+           window.location.href =
+           "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
 
     // Como respaldo, si no la abre, después de un momento va a la Play Store
-    setTimeout(() => {
-      window.location.href =
-        "https://play.google.com/store/apps/details?id=" + pkg;
-    }, 1500);
-  } else {
+          setTimeout(() => {
+              window.location.href =
+                "https://play.google.com/store/apps/details?id=" + pkg;
+                }, 1500);
+  }     
+        else {
     // En otros dispositivos, solo abre la página de Play Store
-    window.open(
-      "https://play.google.com/store/apps/details?id=" + pkg,
-      "_blank"
+           window.open(
+             "https://play.google.com/store/apps/details?id=" + pkg,
+             "_blank"
     );
   }
 }
