@@ -10,11 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- PWA: Manifest e instalación -->
-  <meta name="theme-color" content="#062733">
-  <link rel="manifest" href="manifest.json">
-
-  
   <style>
     :root {
       --bg-app: #062733;
@@ -382,41 +377,6 @@
               <div class="icon-btn" onclick="openScreen('sueno')">😴</div>
               <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
-              <div class="icon-btn" onclick="openScreen('musica')">🎧</div>
-              <div class="icon-btn" onclick="openScreen('juegos')">🎮</div>
-              <div class="icon-btn" onclick="openScreen('castillo')">🏰</div>
-            </div>
-      <!-- PANTALLA INICIO -->
-      <div id="screen-home" class="screen active">
-        <div class="screen-content">
-          <div class="main-actions">
-            <button class="btn-main" onclick="openScreen('frase')">
-              Frase del día
-            </button>
-            <button class="btn-main secondary" onclick="openScreen('foro')">
-              Foro anónimo
-            </button>
-          </div>
-
-          <div class="bottom-tools">
-  <div class="section-label">cuidar tu cuerpo para cuidar tu mente</div>
-
-  <!-- FILA 1 -->
-  <div class="icon-row">
-      <div class="icon-btn" onclick="openScreen('sueno')">😴</div>
-      <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
-      <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
-      <div class="icon-btn" onclick="openScreen('musica')">🎧</div>
-      <div class="icon-btn" onclick="openScreen('juegos')">🎮</div>
-      <div class="icon-btn" onclick="openScreen('castillo')">🏰</div>
-  </div>
-
-  <p class="bottom-caption">
-    Sueño · Comida · Ritmo activo · Música · Juegos · Extra
-  </p>
-</div>
-
-
             </div>
             <p class="bottom-caption">
               Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo
@@ -519,78 +479,6 @@
           </ul>
         </div>
       </div>
-            <!-- PANTALLA JUEGO - INSTRUCCIONES -->
-<div id="screen-juegoInfo" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('home')">←</button>
-    <span>Mini juego MentalVibes</span>
-  </div>
-  <div class="screen-content">
-    <ul class="tips-list">
-      <li>1. Pulsa el botón <strong>"Descargar juego"</strong> en el siguiente paso.</li>
-      <li>2. Espera a que termine la descarga del archivo <strong>.apk</strong>.</li>
-      <li>3. Abre el archivo descargado desde la barra de notificaciones o la carpeta de descargas.</li>
-      <li>4. Si el sistema lo pide, permite la instalación desde este origen.</li>
-      <li>5. Una vez instalado, busca el juego en tu menú de aplicaciones y ábrelo.</li>
-    </ul>
-
-    <div style="margin-top: 16px;">
-      <button class="btn-main" onclick="openScreen('juegoLink')">
-        Continuar a descarga del juego 🎮
-      </button>
-    </div>
-  </div>
-</div>
-    <!-- PANTALLA JUEGO - DESCARGA / ENLACE -->
-<div id="screen-juegoLink" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('juegoInfo')">←</button>
-    <span>Descargar / abrir juego</span>
-  </div>
-  <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
-    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">
-      Al pulsar el botón se abrirá la página o descarga del minijuego creado en Godot.
-    </p>
-
-    <div style="margin-bottom:18px;">
-      <div class="icon-btn" style="font-size:1.8rem;" onclick="openGameDownload()">
-        🎮
-      </div>
-    </div>
-
-    <button class="btn-main" onclick="openGameDownload()">
-      Descargar / abrir juego
-    </button>
-
-    <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;">
-      Después de instalarlo, búscalo en tu menú de apps para jugar.
-    </p>
-  </div>
-</div>
-   <!-- PANTALLA JUEGO - ABRIR CLASH ROYALE -->
-<div id="screen-juegoAbrir" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('home')">←</button>
-    <span>Abrir Clash Royale</span>
-  </div>
-  <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
-    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px; max-width:260px;">
-      Pulsa el botón para abrir Clash Royale. Si no lo tienes instalado, se abrirá la página en Google Play.
-    </p>
-
-    <div style="margin-bottom:18px;">
-      <div class="icon-btn" style="font-size:1.8rem;" onclick="openClashRoyale()">
-        🏰
-      </div>
-    </div>
-
-    <button class="btn-main" onclick="openClashRoyale()">
-      Abrir Clash Royale 🎮
-    </button>
-  </div>
-</div>
-
-
 
     </div>
 
@@ -625,18 +513,6 @@
         case 'ritmo':
           document.getElementById('screen-ritmo').classList.add('active');
           break;
-        case 'juegoInfo':
-          document.getElementById('screen-juegoInfo').classList.add('active');
-          break;
-        case 'juegoLink':
-          document.getElementById('screen-juegoLink').classList.add('active');
-          break;
-        case 'juegoAbrir':
-          document.getElementById('screen-juegoAbrir').classList.add('active');
-          break;
-
-
-
       }
     }
 
@@ -691,61 +567,10 @@
 
       foroInput.value = "";
     }
-    function openSpotify() {
-  // Enlace a Spotify general
-  window.open("https://open.spotify.com/", "_blank");
-}
-     function openGameDownload() {
-   window.open("https://drive.google.com/uc?export=download&id=1QwGdqa8rK4WSEJWY3bKP25gqo7JQli1j", "_blank");
-}
-    
-    function openClashRoyale() {
-  const pkg = "com.supercell.clashroyale";
-
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  if (isAndroid) {
-    // Intento abrir la app instalada
-    window.location.href =
-      "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
-
-    // Si no se abre, enviar a Play Store
-    setTimeout(() => {
-      window.location.href =
-        "https://play.google.com/store/apps/details?id=" + pkg;
-    }, 1500);
-  }
-
-  else if (isIOS) {
-    // En iOS, solo App Store funciona
-    window.location.href =
-      "https://apps.apple.com/app/clash-royale/id1053012308";
-  }
-
-  else {
-    // Para PC u otros sistemas
-    window.open(
-      "https://play.google.com/store/apps/details?id=" + pkg,
-      "_blank"
-    );
-  }
-}
-
-
 
     // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
     // (no es necesario aquí porque solo se carga al abrirla)
   </script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("service-worker.js")
-          .then(reg => console.log("Service worker registrado:", reg.scope))
-          .catch(err => console.error("Error al registrar SW:", err));
-      });
-    }
-  </script>
+
 </body>
 </html>
