@@ -536,7 +536,7 @@
     </p>
   </div>
 </div>
-    <!-- PANTALLA JUEGO - SOLO BOTÓN PARA ABRIR -->
+   <!-- PANTALLA JUEGO - SOLO BOTÓN PARA ABRIR -->
 <div id="screen-juegoAbrir" class="screen">
   <div class="screen-header">
     <button class="back-btn" onclick="openScreen('home')">←</button>
@@ -544,21 +544,23 @@
   </div>
   <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
     <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">
-      Pulsa el botón para abrir o descargar el minijuego creado en Godot.
+      Pulsa el botón para abrir el minijuego creado en Godot.
     </p>
 
     <div style="margin-bottom:18px;">
-      <div class="icon-btn" style="font-size:1.8rem;" onclick="openGameDownload()">
+      <!-- Icono grande que abre la app -->
+      <div class="icon-btn" style="font-size:1.8rem;" onclick="openGameApp()">
         🎮
       </div>
     </div>
 
-    <button class="btn-main" onclick="openGameDownload()">
-      Abrir / descargar juego 🎮
+    <!-- Botón principal que también abre la app -->
+    <button class="btn-main" onclick="openGameApp()">
+      Abrir juego 🎮
     </button>
 
     <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px; max-width:260px;">
-      Si es la primera vez, se descargará el archivo .apk. Después de instalarlo, podrás abrirlo desde el menú de aplicaciones de tu celular.
+      Asegúrate de tener el juego ya instalado en tu celular Android. Si no se abre, revisa que la app esté instalada correctamente.
     </p>
   </div>
 </div>
@@ -606,6 +608,7 @@
         case 'juegoAbrir':
           document.getElementById('screen-juegoAbrir').classList.add('active');
           break;
+
 
 
       }
@@ -669,6 +672,18 @@
      function openGameDownload() {
    window.open("https://drive.google.com/uc?export=download&id=1QwGdqa8rK4WSEJWY3bKP25gqo7JQli1j", "_blank");
 }
+    function openGameApp() {
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (isAndroid) {
+    // Intent para abrir directamente la app instalada
+    window.location.href =
+      "intent://#Intent;package=org.godot.projecto_avioncito;scheme=android-app;end";
+  } else {
+    alert("Este botón solo funciona en celulares Android con el juego instalado.");
+  }
+}
+
 
 
     // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
