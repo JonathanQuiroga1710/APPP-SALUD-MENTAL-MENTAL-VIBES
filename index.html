@@ -382,6 +382,7 @@
               <div class="icon-btn" onclick="openScreen('sueno')">😴</div>
               <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
+              <div class="icon-btn" onclick="openSpotify()">🎧</div>
             </div>
             <p class="bottom-caption">
               Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo
@@ -572,7 +573,10 @@
 
       foroInput.value = "";
     }
-
+    function openSpotify() {
+  // Enlace a Spotify general
+  window.open("https://open.spotify.com/", "_blank");
+}
     // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
     // (no es necesario aquí porque solo se carga al abrirla)
   </script>
