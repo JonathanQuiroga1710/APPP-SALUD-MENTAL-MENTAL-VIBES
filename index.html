@@ -378,6 +378,8 @@
               <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
               <div class="icon-btn" onclick="openSpotify()">🎧</div>
+              <div class="icon-btn" onclick="openScreen('juegoAbrir')">🏰</div>
+
 
             </div>
             <p class="bottom-caption">
@@ -481,6 +483,29 @@
           </ul>
         </div>
       </div>
+      <!-- PANTALLA JUEGO - ABRIR CLASH ROYALE -->
+<div id="screen-juegoAbrir" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('home')">←</button>
+    <span>Abrir Clash Royale</span>
+  </div>
+  <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
+    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px; max-width:260px;">
+      Pulsa el botón para abrir Clash Royale. Si no lo tienes instalado, se abrirá la página en Google Play.
+    </p>
+
+    <div style="margin-bottom:18px;">
+      <div class="icon-btn" style="font-size:1.8rem;" onclick="openClashRoyale()">
+        🏰
+      </div>
+    </div>
+
+    <button class="btn-main" onclick="openClashRoyale()">
+      Abrir Clash Royale 🎮
+    </button>
+  </div>
+</div>
+
 
     </div>
 
@@ -573,6 +598,29 @@
   // Enlace a Spotify general
        window.open("https://open.spotify.com/playlist/4cIQ7fEAGZ5yAQ0sGQOc96?si=h7w6VGlQT6-xlVqOBqo8IQ&pi=y6v9Sw_jS4WsR", "_blank");
 }
+    function openClashRoyale() {
+  const pkg = "com.supercell.clashroyale";
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (isAndroid) {
+    // Intento abrir la app directamente (solo Android + Chrome)
+    window.location.href =
+      "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
+
+    // Como respaldo, si no la abre, después de un momento va a la Play Store
+    setTimeout(() => {
+      window.location.href =
+        "https://play.google.com/store/apps/details?id=" + pkg;
+    }, 1500);
+  } else {
+    // En otros dispositivos, solo abre la página de Play Store
+    window.open(
+      "https://play.google.com/store/apps/details?id=" + pkg,
+      "_blank"
+    );
+  }
+}
+
 
     // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
     // (no es necesario aquí porque solo se carga al abrirla)
