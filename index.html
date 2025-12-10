@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>MentalVibes – Mockup Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-app: #062733;
+      --bg-card: #02151d;
+      --accent:  #50c4a7;
+      --accent-soft: #3ea894;
+      --text-main: #f5f7f8;
+      --text-muted: #9fb3bd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #0c3a4b 0, #020a0f 60%);
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+    }
+
+    .phone-frame {
+      width: 360px;
+      max-width: 95vw;
+      height: 720px;
+      max-height: 95vh;
+      background: var(--bg-app);
+      border-radius: 32px;
+      padding: 18px 18px 24px;
+      box-shadow:
+        0 22px 40px rgba(0, 0, 0, 0.7),
+        0 0 0 8px rgba(255, 255, 255, 0.02);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-inner {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 18px 16px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .logo-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .logo-brain {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .logo-text {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    /* Botones generales */
+    .btn-main {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+      color: #02151d;
+      font-size: 0.98rem;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(4, 80, 64, 0.65);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.1s ease;
+    }
+
+    .btn-main.secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--text-main);
+      box-shadow: none;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow: 0 9px 22px rgba(4, 80, 64, 0.7);
+    }
+
+    .btn-main.secondary:hover {
+      background: rgba(80, 196, 167, 0.08);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .bottom-tools {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .icon-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(80, 196, 167, 0.16);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .bottom-caption {
+      font-size: 0.72rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* Pantallas */
+    .screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .screen-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header interno con back */
+    .screen-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .back-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--accent);
+      background: transparent;
+      transition: background 0.15s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(80, 196, 167, 0.12);
+    }
+
+    /* Frase del día */
+    .frase-box {
+      flex: 1;
+      border-radius: 18px;
+      border: 1px solid rgba(80, 196, 167, 0.4);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      background: rgba(2, 21, 29, 0.9);
+    }
+
+    .frase-author {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .frase-actions {
+      margin-top: 16px;
+    }
+
+    /* Foro */
+    .foro-form {
+      margin-bottom: 12px;
+    }
+
+    .foro-textarea {
+      width: 100%;
+      min-height: 70px;
+      max-height: 120px;
+      resize: vertical;
+      border-radius: 12px;
+      border: 1px solid rgba(159, 179, 189, 0.6);
+      background: rgba(1, 11, 16, 0.9);
+      color: var(--text-main);
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .foro-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .foro-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+      margin-top: 6px;
+    }
+
+    .foro-empty {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .foro-post {
+      background: rgba(5, 31, 42, 0.9);
+      border-radius: 12px;
+      padding: 10px 11px;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(80, 196, 167, 0.25);
+    }
+
+    .foro-meta {
+      margin-top: 6px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Tips simples */
+    .tips-list {
+      flex: 1;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      padding: 4px 2px;
+      line-height: 1.6;
+    }
+
+    .tips-list li {
+      margin-bottom: 6px;
+    }
+
+    .credits {
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      opacity: 0.55;
+      color: var(--text-muted);
+    }
+
+    @media (max-height: 700px) {
+      .phone-frame {
+        height: 640px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone-frame">
+    <div class="phone-inner">
+
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>MentalVibes</span>
+        <span>🔋84%</span>
+      </div>
+
+      <div class="logo-area">
+        <div class="logo-brain">MV</div>
+        <div class="logo-text">bienestar universitario</div>
+      </div>
+
+      <!-- PANTALLA INICIO -->
+      <div id="screen-home" class="screen active">
+        <div class="screen-content">
+          <div class="main-actions">
+            <button class="btn-main" onclick="openScreen('frase')">
+              Frase del día
+            </button>
+            <button class="btn-main secondary" onclick="openScreen('foro')">
+              Foro anónimo
+            </button>
+          </div>
+
+          <div class="bottom-tools">
+            <div class="section-label">cuidar tu cuerpo para cuidar tu mente</div>
+            <div class="bottom-row">
+              <div class="icon-btn" onclick="openScreen('sueno')">😴</div>
+              <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
+              <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
+            </div>
+            <p class="bottom-caption">
+              Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANTALLA FRASE DEL DÍA -->
+      <div id="screen-frase" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Frase del día</span>
+        </div>
+        <div class="screen-content">
+          <div class="frase-box">
+            <div>
+              <div id="frase-texto"></div>
+              <div id="frase-autor" class="frase-author"></div>
+            </div>
+          </div>
+          <div class="frase-actions">
+            <button class="btn-main secondary" onclick="nuevaFrase()">
+              Otra frase ✨
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANTALLA FORO ANÓNIMO -->
+      <div id="screen-foro" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Foro anónimo</span>
+        </div>
+        <div class="screen-content">
+          <form class="foro-form" onsubmit="publicar(event)">
+            <textarea
+              id="foro-input"
+              class="foro-textarea"
+              placeholder="Escribe lo que sientes hoy... (tu mensaje será anónimo)"
+            ></textarea>
+            <div style="margin-top: 6px; display:flex; justify-content:flex-end;">
+              <button type="submit" class="btn-main" style="width:auto; padding:8px 14px; font-size:0.8rem;">
+                Publicar
+              </button>
+            </div>
+          </form>
+
+          <div id="foro-lista" class="foro-list">
+            <p class="foro-empty" id="foro-empty">Todavía no hay mensajes. Sé la primera persona en compartir algo 💬</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANTALLA SUEÑO -->
+      <div id="screen-sueno" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Espacio de sueño</span>
+        </div>
+        <div class="screen-content">
+          <ul class="tips-list">
+            <li>Intenta dormir entre 7 y 9 horas cada noche.</li>
+            <li>Evita pantallas al menos 30 minutos antes de dormir.</li>
+            <li>Haz una respiración profunda 1 minuto antes de acostarte.</li>
+            <li>Si no puedes dormir, no te culpes: tu cuerpo también está aprendiendo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PANTALLA COMIDA -->
+      <div id="screen-comida" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Comidas rápidas y sanas</span>
+        </div>
+        <div class="screen-content">
+          <ul class="tips-list">
+            <li>Ten siempre a mano frutas o frutos secos para evitar solo snacks procesados.</li>
+            <li>Intenta incluir al menos un vegetal en tu almuerzo.</li>
+            <li>Hidrátate: muchas veces no es cansancio, es falta de agua.</li>
+            <li>Planifica una comida sencilla para después de clases, tu yo futuro lo agradecerá.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PANTALLA RITMO ACTIVO -->
+      <div id="screen-ritmo" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Ritmo activo</span>
+        </div>
+        <div class="screen-content">
+          <ul class="tips-list">
+            <li>Levántate y estírate al menos 1 vez cada hora de estudio.</li>
+            <li>Camina 5 minutos entre clases para soltar tensión.</li>
+            <li>Una mini rutina de 10 minutos de movimiento cuenta: no tiene que ser perfecto.</li>
+            <li>Escucha música que te haga sentir energía mientras te mueves.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="credits">
+      Prototipo web · MentalVibes
+    </div>
+  </div>
+
+  <script>
+    // Manejo de pantallas
+    function openScreen(name) {
+      const screens = document.querySelectorAll('.screen');
+      screens.forEach(s => s.classList.remove('active'));
+
+      switch (name) {
+        case 'home':
+          document.getElementById('screen-home').classList.add('active');
+          break;
+        case 'frase':
+          document.getElementById('screen-frase').classList.add('active');
+          nuevaFrase();
+          break;
+        case 'foro':
+          document.getElementById('screen-foro').classList.add('active');
+          break;
+        case 'sueno':
+          document.getElementById('screen-sueno').classList.add('active');
+          break;
+        case 'comida':
+          document.getElementById('screen-comida').classList.add('active');
+          break;
+        case 'ritmo':
+          document.getElementById('screen-ritmo').classList.add('active');
+          break;
+      }
+    }
+
+    // FRASES DEL DÍA
+    const frases = [
+      { texto: "Un día a la vez. Ya has superado días difíciles antes.", autor: "MentalVibes" },
+      { texto: "No tienes que hacerlo perfecto, solo tienes que hacerlo posible.", autor: "MentalVibes" },
+      { texto: "Tu valor no se mide por tus notas ni por tu productividad.", autor: "MentalVibes" },
+      { texto: "Descansar también es avanzar.", autor: "MentalVibes" },
+      { texto: "Está bien pedir ayuda. Nadie atraviesa la universidad en solitario.", autor: "MentalVibes" },
+      { texto: "Pequeños pasos sostenidos vencen a grandes esfuerzos de un solo día.", autor: "MentalVibes" },
+      { texto: "Hoy eres más fuerte que ayer, porque sigues aquí.", autor: "MentalVibes" },
+      { texto: "Tu salud mental es más importante que cualquier examen.", autor: "MentalVibes" },
+      { texto: "Lo estás haciendo mejor de lo que crees.", autor: "MentalVibes" }
+    ];
+
+    function nuevaFrase() {
+      const random = frases[Math.floor(Math.random() * frases.length)];
+      document.getElementById('frase-texto').textContent = random.texto;
+      document.getElementById('frase-autor').textContent = "— " + random.autor;
+    }
+
+    // FORO
+    const foroLista = document.getElementById('foro-lista');
+    const foroInput = document.getElementById('foro-input');
+    const foroEmpty = document.getElementById('foro-empty');
+    let contadorAnon = 1;
+
+    function publicar(e) {
+      e.preventDefault();
+      const texto = foroInput.value.trim();
+      if (!texto) return;
+
+      if (foroEmpty) {
+        foroEmpty.remove();
+      }
+
+      const post = document.createElement('div');
+      post.className = 'foro-post';
+
+      const contenido = document.createElement('div');
+      contenido.textContent = texto;
+      post.appendChild(contenido);
+
+      const meta = document.createElement('div');
+      meta.className = 'foro-meta';
+      meta.innerHTML = `<span>Anónimo ${contadorAnon}</span><span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>`;
+      contadorAnon++;
+
+      post.appendChild(meta);
+      foroLista.prepend(post); // mensajes nuevos arriba
+
+      foroInput.value = "";
+    }
+
+    // Iniciar con frase ya cargada si se entra por defecto a esa pantalla
+    // (no es necesario aquí porque solo se carga al abrirla)
+  </script>
+
+</body>
+</html>
