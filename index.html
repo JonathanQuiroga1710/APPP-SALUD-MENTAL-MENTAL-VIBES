@@ -20,11 +20,7 @@
       --text-muted: #9fb3bd;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
@@ -44,9 +40,7 @@
       background: var(--bg-app);
       border-radius: 32px;
       padding: 18px 18px 24px;
-      box-shadow:
-        0 22px 40px rgba(0, 0, 0, 0.7),
-        0 0 0 8px rgba(255, 255, 255, 0.02);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.7), 0 0 0 8px rgba(255, 255, 255, 0.02);
       display: flex;
       flex-direction: column;
       position: relative;
@@ -101,7 +95,7 @@
       color: var(--text-muted);
     }
 
-    /* Botones generales */
+    /* Botones */
     .btn-main {
       width: 100%;
       padding: 14px 16px;
@@ -191,19 +185,18 @@
       flex: 1;
       flex-direction: column;
       overflow: hidden;
+      min-height: 0; /* clave para scroll en hijos */
     }
 
-    .screen.active {
-      display: flex;
-    }
+    .screen.active { display: flex; }
 
     .screen-content {
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 0; /* clave */
     }
 
-    /* Header interno con back */
     .screen-header {
       display: flex;
       align-items: center;
@@ -228,11 +221,9 @@
       transition: background 0.15s ease;
     }
 
-    .back-btn:hover {
-      background: rgba(80, 196, 167, 0.12);
-    }
+    .back-btn:hover { background: rgba(80, 196, 167, 0.12); }
 
-    /* Frase del día */
+    /* Frase */
     .frase-box {
       flex: 1;
       border-radius: 18px;
@@ -248,20 +239,11 @@
       background: rgba(2, 21, 29, 0.9);
     }
 
-    .frase-author {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .frase-actions {
-      margin-top: 16px;
-    }
+    .frase-author { margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); }
+    .frase-actions { margin-top: 16px; }
 
     /* Foro */
-    .foro-form {
-      margin-bottom: 12px;
-    }
+    .foro-form { margin-bottom: 12px; }
 
     .foro-textarea {
       width: 100%;
@@ -278,23 +260,17 @@
       outline: none;
     }
 
-    .foro-textarea:focus {
-      border-color: var(--accent);
-    }
+    .foro-textarea:focus { border-color: var(--accent); }
 
     .foro-list {
       flex: 1;
       overflow-y: auto;
       padding-right: 4px;
       margin-top: 6px;
+      min-height: 0;
     }
 
-    .foro-empty {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 12px;
-      text-align: center;
-    }
+    .foro-empty { font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-align: center; }
 
     .foro-post {
       background: rgba(5, 31, 42, 0.9);
@@ -313,7 +289,7 @@
       justify-content: space-between;
     }
 
-    /* Tips simples */
+    /* Tips */
     .tips-list {
       flex: 1;
       font-size: 0.85rem;
@@ -321,10 +297,7 @@
       padding: 4px 2px;
       line-height: 1.6;
     }
-
-    .tips-list li {
-      margin-bottom: 6px;
-    }
+    .tips-list li { margin-bottom: 6px; }
 
     .credits {
       position: absolute;
@@ -336,201 +309,139 @@
       color: var(--text-muted);
     }
 
-    @media (max-height: 700px) {
-      .phone-frame {
-        height: 640px;
-      }
-    }
+    @media (max-height: 700px) { .phone-frame { height: 640px; } }
 
     /* ====== RECETAS (pantalla comida) ====== */
-.search-wrap{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-}
+    .search-wrap{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
 
-.search-input{
-  width:100%;
-  padding:10px 12px;
-  border-radius:999px;
-  border:1px solid rgba(159,179,189,0.45);
-  background: rgba(1, 11, 16, 0.9);
-  color: var(--text-main);
-  outline:none;
-  font-family: inherit;
-  font-size: 0.85rem;
-}
+    .search-input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(159,179,189,0.45);
+      background: rgba(1, 11, 16, 0.9);
+      color: var(--text-main);
+      outline:none;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    .search-input:focus{ border-color: var(--accent); }
 
-.search-input:focus{
-  border-color: var(--accent);
-}
+    .recipe-grid{
+      flex:1;
+      overflow-y:auto;
+      padding-right:6px;
+      min-height: 0;
+    }
 
-.recipe-grid{
-  flex:1;
-  overflow-y:auto;
-  padding-right:6px;
-}
+    .recipe-grid::-webkit-scrollbar{ width:6px; }
+    .recipe-grid::-webkit-scrollbar-thumb{
+      background: rgba(80,196,167,0.35);
+      border-radius:999px;
+    }
 
-.recipe-grid::-webkit-scrollbar{ width:6px; }
-.recipe-grid::-webkit-scrollbar-thumb{
-  background: rgba(80,196,167,0.35);
-  border-radius:999px;
-}
+    .recipe-cards{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
 
-.recipe-cards{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:12px;
-}
+    .recipe-card{
+      border-radius:14px;
+      overflow:hidden;
+      background: rgba(5, 31, 42, 0.88);
+      border:1px solid rgba(80,196,167,0.22);
+      cursor:pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
 
-.recipe-card{
-  border-radius:14px;
-  overflow:hidden;
-  background: rgba(5, 31, 42, 0.88);
-  border:1px solid rgba(80,196,167,0.22);
-  cursor:pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-}
+    .recipe-card:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.45);
+    }
 
-.recipe-card:hover{
-  transform: translateY(-1px);
-  filter: brightness(1.03);
-  box-shadow: 0 10px 18px rgba(0,0,0,0.45);
-}
+    .recipe-img{
+      height:92px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at top, rgba(80,196,167,0.20), rgba(0,0,0,0.00));
+      font-size: 2rem;
+    }
 
-.recipe-img{
-  height:92px;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: radial-gradient(circle at top, rgba(80,196,167,0.20), rgba(0,0,0,0.00));
-  font-size: 2rem;
-}
+    .recipe-body{ padding:10px 10px 12px; }
 
-.recipe-body{
-  padding:10px 10px 12px;
-}
+    .recipe-meta{
+      display:flex;
+      justify-content:space-between;
+      font-size:0.68rem;
+      color: var(--text-muted);
+      margin-bottom:6px;
+    }
 
-.recipe-meta{
-  display:flex;
-  justify-content:space-between;
-  font-size:0.68rem;
-  color: var(--text-muted);
-  margin-bottom:6px;
-}
+    .recipe-title{ font-size:0.85rem; font-weight:600; margin-bottom:6px; }
+    .recipe-desc{ font-size:0.74rem; color: var(--text-muted); line-height:1.35; }
 
-.recipe-title{
-  font-size:0.85rem;
-  font-weight:600;
-  margin-bottom:6px;
-}
+    /* Detalle receta (IMPORTANTE: scroll aquí) */
+    .recipe-detail-box{
+      flex:1;
+      overflow-y:auto;
+      padding-right:6px;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+    }
 
-.recipe-desc{
-  font-size:0.74rem;
-  color: var(--text-muted);
-  line-height:1.35;
-}
+    .detail-card{
+      border-radius:16px;
+      border:1px solid rgba(80,196,167,0.25);
+      background: rgba(5, 31, 42, 0.88);
+      padding:14px;
+    }
 
-/* Detalle receta */
-.recipe-detail-box{
-  flex:1;
-  overflow-y:auto;
-  padding-right:6px;
-}
+    .detail-hero{
+      height: 180px;
+      width: 100%;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 4rem;
+      margin-bottom: 12px;
+      background: radial-gradient(circle at top, rgba(80,196,167,0.22), rgba(0,0,0,0));
+      border: 1px solid rgba(80,196,167,0.18);
+    }
 
-.detail-card{
-  border-radius:16px;
-  border:1px solid rgba(80,196,167,0.25);
-  background: rgba(5, 31, 42, 0.88);
-  padding:14px;
-}
-.detail-hero{
-  height: 180px;            /* más grande */
-  width: 100%;
-  border-radius: 14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 4rem;          /* emoji más grande */
-  margin-bottom: 12px;
-  background: radial-gradient(circle at top, rgba(80,196,167,0.22), rgba(0,0,0,0));
-  border: 1px solid rgba(80,196,167,0.18);
-}
+    .detail-title{ font-size:1rem; font-weight:600; margin-bottom:8px; }
 
-/*.detail-hero{
-  height:180px;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size: 3rem;
-  margin-bottom:12px;
-  background: radial-gradient(circle at top, rgba(80,196,167,0.22), rgba(0,0,0,0));
-  border:1px solid rgba(80,196,167,0.18);
-}*/
+    .detail-meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:0.75rem;
+      color: var(--text-muted);
+      margin-bottom:10px;
+    }
 
-.detail-title{
-  font-size:1rem;
-  font-weight:600;
-  margin-bottom:8px;
-}
+    .detail-section-title{
+      font-size:0.78rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color: var(--text-muted);
+      margin:12px 0 6px;
+    }
 
-.detail-meta{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  font-size:0.75rem;
-  color: var(--text-muted);
-  margin-bottom:10px;
-}
-
-.detail-section-title{
-  font-size:0.78rem;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color: var(--text-muted);
-  margin:12px 0 6px;
-}
-
-.detail-list{
-  font-size:0.85rem;
-  line-height:1.6;
-  padding-left:16px;
-}
-
-.detail-list li{ margin-bottom:6px; }
-    /*  */
-#screen-recetaDetalle {
-  flex: 1;
-  min-height: 0;            /* clave para que  funcione */
-}
-
-#screen-recetaDetalle .screen-content{
-  flex: 1;
-  min-height: 0;            /* clave */
-  overflow-y: auto;         /* scroll real */
-  -webkit-overflow-scrolling: touch;
-  padding-right: 6px;
-}
-
-/* Evita que la card corte contenido */
-.detail-card{
-  overflow: visible;        /*  */
-}
-
-/* */
-.recipe-detail-box{
-  overflow: visible;
-  min-height: 0;
-}
-
-
+    .detail-list{
+      font-size:0.85rem;
+      line-height:1.6;
+      padding-left:16px;
+    }
+    .detail-list li{ margin-bottom:6px; }
   </style>
 </head>
-<body>
 
+<body>
   <div class="phone-frame">
     <div class="phone-inner">
 
@@ -549,12 +460,8 @@
       <div id="screen-home" class="screen active">
         <div class="screen-content">
           <div class="main-actions">
-            <button class="btn-main" onclick="openScreen('frase')">
-              Frase del día
-            </button>
-            <button class="btn-main secondary" onclick="openScreen('foro')">
-              Foro anónimo
-            </button>
+            <button class="btn-main" onclick="openScreen('frase')">Frase del día</button>
+            <button class="btn-main secondary" onclick="openScreen('foro')">Foro anónimo</button>
           </div>
 
           <div class="bottom-tools">
@@ -565,17 +472,14 @@
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
               <div class="icon-btn" onclick="openSpotify()">🎧</div>
               <div class="icon-btn" onclick="openScreen('juegoAbrir')">🏰</div>
-
-
             </div>
-            <p class="bottom-caption">
-              Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo
-            </p>
+
+            <p class="bottom-caption">Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo</p>
           </div>
         </div>
       </div>
 
-      <!-- PANTALLA FRASE DEL DÍA -->
+      <!-- PANTALLA FRASE -->
       <div id="screen-frase" class="screen">
         <div class="screen-header">
           <button class="back-btn" onclick="openScreen('home')">←</button>
@@ -589,14 +493,12 @@
             </div>
           </div>
           <div class="frase-actions">
-            <button class="btn-main secondary" onclick="nuevaFrase()">
-              Otra frase ✨
-            </button>
+            <button class="btn-main secondary" onclick="nuevaFrase()">Otra frase ✨</button>
           </div>
         </div>
       </div>
 
-      <!-- PANTALLA FORO ANÓNIMO -->
+      <!-- PANTALLA FORO -->
       <div id="screen-foro" class="screen">
         <div class="screen-header">
           <button class="back-btn" onclick="openScreen('home')">←</button>
@@ -604,15 +506,9 @@
         </div>
         <div class="screen-content">
           <form class="foro-form" onsubmit="publicar(event)">
-            <textarea
-              id="foro-input"
-              class="foro-textarea"
-              placeholder="Escribe lo que sientes hoy... (tu mensaje será anónimo)"
-            ></textarea>
+            <textarea id="foro-input" class="foro-textarea" placeholder="Escribe lo que sientes hoy... (tu mensaje será anónimo)"></textarea>
             <div style="margin-top: 6px; display:flex; justify-content:flex-end;">
-              <button type="submit" class="btn-main" style="width:auto; padding:8px 14px; font-size:0.8rem;">
-                Publicar
-              </button>
+              <button type="submit" class="btn-main" style="width:auto; padding:8px 14px; font-size:0.8rem;">Publicar</button>
             </div>
           </form>
 
@@ -634,43 +530,32 @@
             <li>Evita pantallas al menos 30 minutos antes de dormir.</li>
             <li>Haz una respiración profunda 1 minuto antes de acostarte.</li>
             <li>Si no puedes dormir, no te culpes: tu cuerpo también está aprendiendo.</li>
-            <li>se mejor</li>
           </ul>
         </div>
       </div>
-<!-- PANTALLA COMIDA (RECETAS) -->
-<div id="screen-comida" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('home')">←</button>
-    <span>Comidas rápidas y sanas</span>
-  </div>
 
-  <div class="screen-content">
+      <!-- PANTALLA COMIDA -->
+      <div id="screen-comida" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Comidas rápidas y sanas</span>
+        </div>
 
-    <!-- buscador -->
-    <div class="search-wrap">
-      <input
-        id="recipe-search"
-        class="search-input"
-        type="text"
-        placeholder="Buscar receta..."
-        oninput="renderRecetas()"
-      />
-    </div>
+        <div class="screen-content">
+          <div class="search-wrap">
+            <input id="recipe-search" class="search-input" type="text" placeholder="Buscar receta..." oninput="renderRecetas()" />
+          </div>
 
-    <!-- grilla -->
-    <div class="recipe-grid">
-      <div id="recipe-cards" class="recipe-cards"></div>
-      <p id="recipe-empty" class="foro-empty" style="display:none;">
-        No se encontraron recetas con ese criterio.
-      </p>
-    </div>
+          <div class="recipe-grid">
+            <div id="recipe-cards" class="recipe-cards"></div>
+            <p id="recipe-empty" class="foro-empty" style="display:none;">
+              No se encontraron recetas con ese criterio.
+            </p>
+          </div>
+        </div>
+      </div>
 
-  </div>
-</div>
-
-
-      <!-- PANTALLA RITMO ACTIVO -->
+      <!-- PANTALLA RITMO -->
       <div id="screen-ritmo" class="screen">
         <div class="screen-header">
           <button class="back-btn" onclick="openScreen('home')">←</button>
@@ -685,64 +570,55 @@
           </ul>
         </div>
       </div>
-          <!-- PANTALLA JUEGO - ABRIR CLASH ROYALE -->
-<div id="screen-juegoAbrir" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('home')">←</button>
-    <span>Abrir Clash Royale</span>
-  </div>
-  <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
-    <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px; max-width:260px;">
-      Pulsa el botón para abrir Clash Royale. Si no lo tienes instalado, se abrirá la página en Google Play.
-    </p>
 
-    <div style="margin-bottom:18px;">
-      <div class="icon-btn" style="font-size:1.8rem;" onclick="openClashRoyale()">
-        🏰
+      <!-- PANTALLA JUEGO -->
+      <div id="screen-juegoAbrir" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('home')">←</button>
+          <span>Abrir Clash Royale</span>
+        </div>
+        <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px; max-width:260px;">
+            Pulsa el botón para abrir Clash Royale. Si no lo tienes instalado, se abrirá la página en Google Play.
+          </p>
+
+          <div style="margin-bottom:18px;">
+            <div class="icon-btn" style="font-size:1.8rem;" onclick="openClashRoyale()">🏰</div>
+          </div>
+
+          <button class="btn-main" onclick="openClashRoyale()">Abrir Clash Royale 🎮</button>
+        </div>
       </div>
+
+      <!-- PANTALLA RECETA DETALLE (IMPORTANTE: dentro de phone-inner) -->
+      <div id="screen-recetaDetalle" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('comida')">←</button>
+          <span>Receta</span>
+        </div>
+
+        <div class="screen-content recipe-detail-box">
+          <div class="detail-card">
+            <div id="detail-hero" class="detail-hero">🥗</div>
+
+            <div id="detail-title" class="detail-title">Título</div>
+            <div id="detail-meta" class="detail-meta"></div>
+
+            <div class="detail-section-title">Ingredientes</div>
+            <ul id="detail-ingredients" class="detail-list"></ul>
+
+            <div class="detail-section-title">Pasos</div>
+            <ol id="detail-steps" class="detail-list"></ol>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <button class="btn-main" onclick="openClashRoyale()">
-      Abrir Clash Royale 🎮
-    </button>
-  </div>
-</div>
-
-
-    </div>
-
-    <div class="credits">
-      Prototipo web · MentalVibes
-    </div>
-
-    <!-- PANTALLA RECETA - DETALLE -->
-<div id="screen-recetaDetalle" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('comida')">←</button>
-    <span>Receta</span>
+    <div class="credits">Prototipo web · MentalVibes</div>
   </div>
 
-  <div class="screen-content recipe-detail-box">
-    <div class="detail-card">
-      <div id="detail-hero" class="detail-hero">🥗</div>
-
-      <div id="detail-title" class="detail-title">Título</div>
-
-      <div id="detail-meta" class="detail-meta"></div>
-
-      <div class="detail-section-title">Ingredientes</div>
-      <ul id="detail-ingredients" class="detail-list"></ul>
-
-      <div class="detail-section-title">Pasos</div>
-      <ol id="detail-steps" class="detail-list"></ol>
-    </div>
-  </div>
-</div>
-
-  </div>
-  
   <script>
-    // Manejo de pantallas
     function openScreen(name) {
       const screens = document.querySelectorAll('.screen');
       screens.forEach(s => s.classList.remove('active'));
@@ -751,39 +627,40 @@
         case 'home':
           document.getElementById('screen-home').classList.add('active');
           break;
+
         case 'frase':
           document.getElementById('screen-frase').classList.add('active');
           nuevaFrase();
           break;
+
         case 'foro':
           document.getElementById('screen-foro').classList.add('active');
           break;
+
         case 'sueno':
           document.getElementById('screen-sueno').classList.add('active');
           break;
-        case 'comida':
-          document.getElementById('screen-comida').classList.add('active');
-          break;
-        case 'ritmo':
-          document.getElementById('screen-ritmo').classList.add('active');
-          break;
-        case 'juegoAbrir':
-          document.getElementById('screen-juegoAbrir').classList.add('active');
-          break;
-        case 'recetaDetalle':
-          document.getElementById('screen-recetaDetalle').classList.add('active');
-          break;
+
         case 'comida':
           document.getElementById('screen-comida').classList.add('active');
           setTimeout(renderRecetas, 0);
           break;
 
+        case 'ritmo':
+          document.getElementById('screen-ritmo').classList.add('active');
+          break;
 
+        case 'juegoAbrir':
+          document.getElementById('screen-juegoAbrir').classList.add('active');
+          break;
 
+        case 'recetaDetalle':
+          document.getElementById('screen-recetaDetalle').classList.add('active');
+          break;
       }
     }
 
-    // FRASES DEL DÍA
+    // FRASES
     const frases = [
       { texto: "Un día a la vez. Ya has superado días difíciles antes.", autor: "MentalVibes" },
       { texto: "No tienes que hacerlo perfecto, solo tienes que hacerlo posible.", autor: "MentalVibes" },
@@ -805,7 +682,7 @@
     // FORO
     const foroLista = document.getElementById('foro-lista');
     const foroInput = document.getElementById('foro-input');
-    const foroEmpty = document.getElementById('foro-empty');
+    let foroEmpty = document.getElementById('foro-empty');
     let contadorAnon = 1;
 
     function publicar(e) {
@@ -815,6 +692,7 @@
 
       if (foroEmpty) {
         foroEmpty.remove();
+        foroEmpty = null;
       }
 
       const post = document.createElement('div');
@@ -830,253 +708,165 @@
       contadorAnon++;
 
       post.appendChild(meta);
-      foroLista.prepend(post); // mensajes nuevos arriba
-
+      foroLista.prepend(post);
       foroInput.value = "";
     }
+
     function openSpotify() {
-  // Enlace a Spotify general
-       window.open("https://open.spotify.com/playlist/4cIQ7fEAGZ5yAQ0sGQOc96?si=h7w6VGlQT6-xlVqOBqo8IQ&pi=y6v9Sw_jS4WsR", "_blank");
-}
+      window.open("https://open.spotify.com/playlist/4cIQ7fEAGZ5yAQ0sGQOc96?si=h7w6VGlQT6-xlVqOBqo8IQ&pi=y6v9Sw_jS4WsR", "_blank");
+    }
+
     function openClashRoyale() {
-  const pkg = "com.supercell.clashroyale";
+      const pkg = "com.supercell.clashroyale";
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isAndroid) {
+        window.location.href = "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
+        setTimeout(() => {
+          window.location.href = "https://play.google.com/store/apps/details?id=" + pkg;
+        }, 1500);
+      } else if (isIOS) {
+        window.location.href = "https://apps.apple.com/app/clash-royale/id1053012308";
+      } else {
+        window.open("https://play.google.com/store/apps/details?id=" + pkg, "_blank");
+      }
+    }
 
-  if (isAndroid) {
-    // Intento abrir la app instalada
-    window.location.href =
-      "intent://#Intent;package=" + pkg + ";scheme=android-app;end";
+    // ====== RECETAS ======
+    const recetas = [
+      {
+        id: 1,
+        emoji: "🥑",
+        titulo: "Avocado Toast",
+        prep: "10 min",
+        cook: "5 min",
+        desc: "Pan integral + aguacate + tomate cherry.",
+        ingredientes: ["2 rebanadas de pan integral","1 aguacate","6 tomates cherry","Sal y pimienta","Opcional: limón"],
+        pasos: ["Tostar el pan.","Aplastar el aguacate y sazonar.","Agregar tomates cherry encima.","Servir y disfrutar."]
+      },
+      {
+        id: 2,
+        emoji: "🥗",
+        titulo: "Ensalada Griega",
+        prep: "15 min",
+        cook: "0 min",
+        desc: "Lechuga + queso + aceitunas + aceite de oliva.",
+        ingredientes: ["Lechuga o espinaca","Tomate","Pepino","Queso feta (opcional)","Aceitunas","Aceite de oliva y sal"],
+        pasos: ["Picar vegetales.","Mezclar en un bowl.","Agregar feta y aceitunas.","Aliñar con aceite de oliva y sal."]
+      },
+      {
+        id: 3,
+        emoji: "🍚",
+        titulo: "Bowl Pollo + Brócoli",
+        prep: "10 min",
+        cook: "15 min",
+        desc: "Arroz + pollo salteado + brócoli.",
+        ingredientes: ["1 taza de arroz cocido","150g de pollo","1 taza de brócoli","Salsa de soya (opcional)","Sal y pimienta"],
+        pasos: ["Cocinar el brócoli al vapor o salteado.","Cocinar el pollo en sartén.","Servir con arroz y mezclar.","Agregar salsa si deseas."]
+      },
+      {
+        id: 4,
+        emoji: "🍌",
+        titulo: "Yogurt Bowl",
+        prep: "5 min",
+        cook: "0 min",
+        desc: "Yogurt + banana + granola + frutos secos.",
+        ingredientes: ["1 taza de yogurt natural","1 banana","2 cucharadas de granola","Frutos secos","Opcional: miel"],
+        pasos: ["Colocar yogurt en un bowl.","Agregar banana en rodajas.","Añadir granola y frutos secos.","Opcional: un toque de miel."]
+      },
+      {
+        id: 5,
+        emoji: "🥪",
+        titulo: "Sándwich de Atún",
+        prep: "8 min",
+        cook: "0 min",
+        desc: "Atún + pan integral + vegetales.",
+        ingredientes: ["Pan integral","1 lata de atún","Yogurt o mayonesa (poco)","Lechuga","Tomate","Sal y pimienta"],
+        pasos: ["Mezclar atún con una cucharada de yogurt/mayo.","Armar el sándwich con vegetales.","Cortar y servir."]
+      },
+      {
+        id: 6,
+        emoji: "🍳",
+        titulo: "Huevos Rev. + Espinaca",
+        prep: "5 min",
+        cook: "7 min",
+        desc: "Proteína rápida para estudiar con energía.",
+        ingredientes: ["2 huevos","1 puñado de espinaca","Sal y pimienta","Opcional: queso rallado"],
+        pasos: ["Batir huevos con sal y pimienta.","Saltear espinaca 1 minuto.","Agregar huevo y revolver hasta listo.","Servir caliente."]
+      }
+    ];
 
-    // Si no se abre, enviar a Play Store
-    setTimeout(() => {
-      window.location.href =
-        "https://play.google.com/store/apps/details?id=" + pkg;
-    }, 1500);
-  }
+    function renderRecetas() {
+      const cont = document.getElementById("recipe-cards");
+      const empty = document.getElementById("recipe-empty");
+      const q = (document.getElementById("recipe-search")?.value || "").toLowerCase().trim();
 
-  else if (isIOS) {
-    
-    window.location.href =
-      "https://apps.apple.com/app/clash-royale/id1053012308";
-  }
+      const filtradas = recetas.filter(r =>
+        r.titulo.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q)
+      );
 
-  else {
-    // Para PC u otros sistemas
-    window.open(
-      "https://play.google.com/store/apps/details?id=" + pkg,
-      "_blank"
-    );
-  }
-}
+      cont.innerHTML = "";
 
-   // ====== RECETAS (comida) ======
-const recetas = [
-  {
-    id: 1,
-    emoji: "🥑",
-    titulo: "Avocado Toast",
-    prep: "10 min",
-    cook: "5 min",
-    desc: "Pan integral + aguacate + tomate cherry.",
-    ingredientes: [
-      "2 rebanadas de pan integral",
-      "1 aguacate",
-      "6 tomates cherry",
-      "Sal y pimienta",
-      "Opcional: limón"
-    ],
-    pasos: [
-      "Tostar el pan.",
-      "Aplastar el aguacate y sazonar.",
-      "Agregar tomates cherry encima.",
-      "Servir y disfrutar."
-    ]
-  },
-  {
-    id: 2,
-    emoji: "🥗",
-    titulo: "Ensalada Griega",
-    prep: "15 min",
-    cook: "0 min",
-    desc: "Lechuga + queso + aceitunas + aceite de oliva.",
-    ingredientes: [
-      "Lechuga o espinaca",
-      "Tomate",
-      "Pepino",
-      "Queso feta (opcional)",
-      "Aceitunas",
-      "Aceite de oliva y sal"
-    ],
-    pasos: [
-      "Picar vegetales.",
-      "Mezclar en un bowl.",
-      "Agregar feta y aceitunas.",
-      "Aliñar con aceite de oliva y sal."
-    ]
-  },
-  {
-    id: 3,
-    emoji: "🍚",
-    titulo: "Bowl Pollo + Brócoli",
-    prep: "10 min",
-    cook: "15 min",
-    desc: "Arroz + pollo salteado + brócoli.",
-    ingredientes: [
-      "1 taza de arroz cocido",
-      "150g de pollo",
-      "1 taza de brócoli",
-      "Salsa de soya (opcional)",
-      "Sal y pimienta"
-    ],
-    pasos: [
-      "Cocinar el brócoli al vapor o salteado.",
-      "Cocinar el pollo en sartén.",
-      "Servir con arroz y mezclar.",
-      "Agregar salsa si deseas."
-    ]
-  },
-  {
-    id: 4,
-    emoji: "🍌",
-    titulo: "Yogurt Bowl",
-    prep: "5 min",
-    cook: "0 min",
-    desc: "Yogurt + banana + granola + frutos secos.",
-    ingredientes: [
-      "1 taza de yogurt natural",
-      "1 banana",
-      "2 cucharadas de granola",
-      "Frutos secos",
-      "Offer: miel"
-    ],
-    pasos: [
-      "Colocar yogurt en un bowl.",
-      "Agregar banana en rodajas.",
-      "Añadir granola y frutos secos.",
-      "Opcional: un toque de miel."
-    ]
-  },
-  {
-    id: 5,
-    emoji: "🥪",
-    titulo: "Sándwich de Atún",
-    prep: "8 min",
-    cook: "0 min",
-    desc: "Atún + pan integral + vegetales.",
-    ingredientes: [
-      "Pan integral",
-      "1 lata de atún",
-      "Yogurt o mayonesa (poco)",
-      "Lechuga",
-      "Tomate",
-      "Sal y pimienta"
-    ],
-    pasos: [
-      "Mezclar atún con una cucharada de yogurt/mayo.",
-      "Armar el sándwich con vegetales.",
-      "Cortar y servir."
-    ]
-  },
-  {
-    id: 6,
-    emoji: "🍳",
-    titulo: "Huevos Rev. + Espinaca",
-    prep: "5 min",
-    cook: "7 min",
-    desc: "Proteína rápida para estudiar con energía.",
-    ingredientes: [
-      "2 huevos",
-      "1 puñado de espinaca",
-      "Sal y pimienta",
-      "Opcional: queso rallado"
-    ],
-    pasos: [
-      "Batir huevos con sal y pimienta.",
-      "Saltear espinaca 1 minuto.",
-      "Agregar huevo y revolver hasta listo.",
-      "Servir caliente."
-    ]
-  }
-];
+      if (filtradas.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
 
-let recetaSeleccionada = null;
+      filtradas.forEach(r => {
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+        card.onclick = () => abrirDetalleReceta(r.id);
 
-function renderRecetas() {
-  const cont = document.getElementById("recipe-cards");
-  const empty = document.getElementById("recipe-empty");
-  const q = (document.getElementById("recipe-search")?.value || "").toLowerCase().trim();
+        card.innerHTML = `
+          <div class="recipe-img">${r.emoji}</div>
+          <div class="recipe-body">
+            <div class="recipe-meta">
+              <span>PREP: ${r.prep}</span>
+              <span>COOK: ${r.cook}</span>
+            </div>
+            <div class="recipe-title">${r.titulo}</div>
+            <div class="recipe-desc">${r.desc}</div>
+          </div>
+        `;
 
-  const filtradas = recetas.filter(r =>
-    r.titulo.toLowerCase().includes(q) ||
-    r.desc.toLowerCase().includes(q)
-  );
+        cont.appendChild(card);
+      });
+    }
 
-  cont.innerHTML = "";
+    function abrirDetalleReceta(id) {
+      const receta = recetas.find(r => r.id === id);
+      if (!receta) return;
 
-  if (filtradas.length === 0) {
-    empty.style.display = "block";
-    return;
-  }
-  empty.style.display = "none";
+      document.getElementById("detail-hero").textContent = receta.emoji;
+      document.getElementById("detail-title").textContent = receta.titulo;
+      document.getElementById("detail-meta").innerHTML = `
+        <span>PREP: ${receta.prep}</span>
+        <span>COOK: ${receta.cook}</span>
+      `;
 
-  filtradas.forEach(r => {
-    const card = document.createElement("div");
-    card.className = "recipe-card";
-    card.onclick = () => abrirDetalleReceta(r.id);
+      const ing = document.getElementById("detail-ingredients");
+      ing.innerHTML = "";
+      receta.ingredientes.forEach(i => {
+        const li = document.createElement("li");
+        li.textContent = i;
+        ing.appendChild(li);
+      });
 
-    card.innerHTML = `
-      <div class="recipe-img">${r.emoji}</div>
-      <div class="recipe-body">
-        <div class="recipe-meta">
-          <span>PREP: ${r.prep}</span>
-          <span>COOK: ${r.cook}</span>
-        </div>
-        <div class="recipe-title">${r.titulo}</div>
-        <div class="recipe-desc">${r.desc}</div>
-      </div>
-    `;
+      const steps = document.getElementById("detail-steps");
+      steps.innerHTML = "";
+      receta.pasos.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        steps.appendChild(li);
+      });
 
-    cont.appendChild(card);
-  });
-}
-
-function abrirDetalleReceta(id) {
-  recetaSeleccionada = recetas.find(r => r.id === id);
-  if (!recetaSeleccionada) return;
-
-  document.getElementById("detail-hero").textContent = recetaSeleccionada.emoji;
-  document.getElementById("detail-title").textContent = recetaSeleccionada.titulo;
-
-  document.getElementById("detail-meta").innerHTML = `
-    <span>PREP: ${recetaSeleccionada.prep}</span>
-    <span>COOK: ${recetaSeleccionada.cook}</span>
-  `;
-
-  const ing = document.getElementById("detail-ingredients");
-  ing.innerHTML = "";
-  recetaSeleccionada.ingredientes.forEach(i => {
-    const li = document.createElement("li");
-    li.textContent = i;
-    ing.appendChild(li);
-  });
-
-  const steps = document.getElementById("detail-steps");
-  steps.innerHTML = "";
-  recetaSeleccionada.pasos.forEach(p => {
-    const li = document.createElement("li");
-    li.textContent = p;
-    steps.appendChild(li);
-  });
-
-  openScreen("recetaDetalle");
-}
-
-
-    // 
-    // sexooooooo
+      openScreen("recetaDetalle");
+      // opcional: subir al inicio del scroll
+      document.querySelector("#screen-recetaDetalle .recipe-detail-box").scrollTop = 0;
+    }
   </script>
-
 </body>
 </html>
+
