@@ -489,6 +489,31 @@
 }
 
 .detail-list li{ margin-bottom:6px; }
+    /*  */
+#screen-recetaDetalle {
+  flex: 1;
+  min-height: 0;            /* clave para que  funcione */
+}
+
+#screen-recetaDetalle .screen-content{
+  flex: 1;
+  min-height: 0;            /* clave */
+  overflow-y: auto;         /* scroll real */
+  -webkit-overflow-scrolling: touch;
+  padding-right: 6px;
+}
+
+/* Evita que la card corte contenido */
+.detail-card{
+  overflow: visible;        /*  */
+}
+
+/* */
+.recipe-detail-box{
+  overflow: visible;
+  min-height: 0;
+}
+
 
   </style>
 </head>
