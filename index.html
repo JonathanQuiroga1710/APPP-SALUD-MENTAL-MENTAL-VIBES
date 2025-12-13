@@ -341,6 +341,155 @@
         height: 640px;
       }
     }
+
+    /* ====== RECETAS (pantalla comida) ====== */
+.search-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.search-input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(159,179,189,0.45);
+  background: rgba(1, 11, 16, 0.9);
+  color: var(--text-main);
+  outline:none;
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+
+.search-input:focus{
+  border-color: var(--accent);
+}
+
+.recipe-grid{
+  flex:1;
+  overflow-y:auto;
+  padding-right:6px;
+}
+
+.recipe-grid::-webkit-scrollbar{ width:6px; }
+.recipe-grid::-webkit-scrollbar-thumb{
+  background: rgba(80,196,167,0.35);
+  border-radius:999px;
+}
+
+.recipe-cards{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+
+.recipe-card{
+  border-radius:14px;
+  overflow:hidden;
+  background: rgba(5, 31, 42, 0.88);
+  border:1px solid rgba(80,196,167,0.22);
+  cursor:pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.recipe-card:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.45);
+}
+
+.recipe-img{
+  height:92px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: radial-gradient(circle at top, rgba(80,196,167,0.20), rgba(0,0,0,0.00));
+  font-size: 2rem;
+}
+
+.recipe-body{
+  padding:10px 10px 12px;
+}
+
+.recipe-meta{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.68rem;
+  color: var(--text-muted);
+  margin-bottom:6px;
+}
+
+.recipe-title{
+  font-size:0.85rem;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.recipe-desc{
+  font-size:0.74rem;
+  color: var(--text-muted);
+  line-height:1.35;
+}
+
+/* Detalle receta */
+.recipe-detail-box{
+  flex:1;
+  overflow-y:auto;
+  padding-right:6px;
+}
+
+.detail-card{
+  border-radius:16px;
+  border:1px solid rgba(80,196,167,0.25);
+  background: rgba(5, 31, 42, 0.88);
+  padding:14px;
+}
+
+.detail-hero{
+  height:120px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 3rem;
+  margin-bottom:12px;
+  background: radial-gradient(circle at top, rgba(80,196,167,0.22), rgba(0,0,0,0));
+  border:1px solid rgba(80,196,167,0.18);
+}
+
+.detail-title{
+  font-size:1rem;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.detail-meta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  font-size:0.75rem;
+  color: var(--text-muted);
+  margin-bottom:10px;
+}
+
+.detail-section-title{
+  font-size:0.78rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color: var(--text-muted);
+  margin:12px 0 6px;
+}
+
+.detail-list{
+  font-size:0.85rem;
+  line-height:1.6;
+  padding-left:16px;
+}
+
+.detail-list li{ margin-bottom:6px; }
+
   </style>
 </head>
 <body>
@@ -452,22 +601,37 @@
           </ul>
         </div>
       </div>
+<!-- PANTALLA COMIDA (RECETAS) -->
+<div id="screen-comida" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('home')">←</button>
+    <span>Comidas rápidas y sanas</span>
+  </div>
 
-      <!-- PANTALLA COMIDA -->
-      <div id="screen-comida" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Comidas rápidas y sanas</span>
-        </div>
-        <div class="screen-content">
-          <ul class="tips-list">
-            <li>Ten siempre a mano frutas o frutos secos para evitar solo snacks procesados.</li>
-            <li>Intenta incluir al menos un vegetal en tu almuerzo.</li>
-            <li>Hidrátate: muchas veces no es cansancio, es falta de agua.</li>
-            <li>Planifica una comida sencilla para después de clases, tu yo futuro lo agradecerá.</li>
-          </ul>
-        </div>
-      </div>
+  <div class="screen-content">
+
+    <!-- buscador -->
+    <div class="search-wrap">
+      <input
+        id="recipe-search"
+        class="search-input"
+        type="text"
+        placeholder="Buscar receta..."
+        oninput="renderRecetas()"
+      />
+    </div>
+
+    <!-- grilla -->
+    <div class="recipe-grid">
+      <div id="recipe-cards" class="recipe-cards"></div>
+      <p id="recipe-empty" class="foro-empty" style="display:none;">
+        No se encontraron recetas con ese criterio.
+      </p>
+    </div>
+
+  </div>
+</div>
+
 
       <!-- PANTALLA RITMO ACTIVO -->
       <div id="screen-ritmo" class="screen">
@@ -513,8 +677,33 @@
     <div class="credits">
       Prototipo web · MentalVibes
     </div>
+
+    <!-- PANTALLA RECETA - DETALLE -->
+<div id="screen-recetaDetalle" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('comida')">←</button>
+    <span>Receta</span>
   </div>
 
+  <div class="screen-content recipe-detail-box">
+    <div class="detail-card">
+      <div id="detail-hero" class="detail-hero">🥗</div>
+
+      <div id="detail-title" class="detail-title">Título</div>
+
+      <div id="detail-meta" class="detail-meta"></div>
+
+      <div class="detail-section-title">Ingredientes</div>
+      <ul id="detail-ingredients" class="detail-list"></ul>
+
+      <div class="detail-section-title">Pasos</div>
+      <ol id="detail-steps" class="detail-list"></ol>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
   <script>
     // Manejo de pantallas
     function openScreen(name) {
@@ -544,6 +733,10 @@
         case 'juegoAbrir':
           document.getElementById('screen-juegoAbrir').classList.add('active');
           break;
+        case 'recetaDetalle':
+          document.getElementById('screen-recetaDetalle').classList.add('active');
+          break;
+
 
       }
     }
@@ -636,6 +829,207 @@
   }
 }
 
+   // ====== RECETAS (comida) ======
+const recetas = [
+  {
+    id: 1,
+    emoji: "🥑",
+    titulo: "Avocado Toast",
+    prep: "10 min",
+    cook: "5 min",
+    desc: "Pan integral + aguacate + tomate cherry.",
+    ingredientes: [
+      "2 rebanadas de pan integral",
+      "1 aguacate",
+      "6 tomates cherry",
+      "Sal y pimienta",
+      "Opcional: limón"
+    ],
+    pasos: [
+      "Tostar el pan.",
+      "Aplastar el aguacate y sazonar.",
+      "Agregar tomates cherry encima.",
+      "Servir y disfrutar."
+    ]
+  },
+  {
+    id: 2,
+    emoji: "🥗",
+    titulo: "Ensalada Griega",
+    prep: "15 min",
+    cook: "0 min",
+    desc: "Lechuga + queso + aceitunas + aceite de oliva.",
+    ingredientes: [
+      "Lechuga o espinaca",
+      "Tomate",
+      "Pepino",
+      "Queso feta (opcional)",
+      "Aceitunas",
+      "Aceite de oliva y sal"
+    ],
+    pasos: [
+      "Picar vegetales.",
+      "Mezclar en un bowl.",
+      "Agregar feta y aceitunas.",
+      "Aliñar con aceite de oliva y sal."
+    ]
+  },
+  {
+    id: 3,
+    emoji: "🍚",
+    titulo: "Bowl Pollo + Brócoli",
+    prep: "10 min",
+    cook: "15 min",
+    desc: "Arroz + pollo salteado + brócoli.",
+    ingredientes: [
+      "1 taza de arroz cocido",
+      "150g de pollo",
+      "1 taza de brócoli",
+      "Salsa de soya (opcional)",
+      "Sal y pimienta"
+    ],
+    pasos: [
+      "Cocinar el brócoli al vapor o salteado.",
+      "Cocinar el pollo en sartén.",
+      "Servir con arroz y mezclar.",
+      "Agregar salsa si deseas."
+    ]
+  },
+  {
+    id: 4,
+    emoji: "🍌",
+    titulo: "Yogurt Bowl",
+    prep: "5 min",
+    cook: "0 min",
+    desc: "Yogurt + banana + granola + frutos secos.",
+    ingredientes: [
+      "1 taza de yogurt natural",
+      "1 banana",
+      "2 cucharadas de granola",
+      "Frutos secos",
+      "Offer: miel"
+    ],
+    pasos: [
+      "Colocar yogurt en un bowl.",
+      "Agregar banana en rodajas.",
+      "Añadir granola y frutos secos.",
+      "Opcional: un toque de miel."
+    ]
+  },
+  {
+    id: 5,
+    emoji: "🥪",
+    titulo: "Sándwich de Atún",
+    prep: "8 min",
+    cook: "0 min",
+    desc: "Atún + pan integral + vegetales.",
+    ingredientes: [
+      "Pan integral",
+      "1 lata de atún",
+      "Yogurt o mayonesa (poco)",
+      "Lechuga",
+      "Tomate",
+      "Sal y pimienta"
+    ],
+    pasos: [
+      "Mezclar atún con una cucharada de yogurt/mayo.",
+      "Armar el sándwich con vegetales.",
+      "Cortar y servir."
+    ]
+  },
+  {
+    id: 6,
+    emoji: "🍳",
+    titulo: "Huevos Rev. + Espinaca",
+    prep: "5 min",
+    cook: "7 min",
+    desc: "Proteína rápida para estudiar con energía.",
+    ingredientes: [
+      "2 huevos",
+      "1 puñado de espinaca",
+      "Sal y pimienta",
+      "Opcional: queso rallado"
+    ],
+    pasos: [
+      "Batir huevos con sal y pimienta.",
+      "Saltear espinaca 1 minuto.",
+      "Agregar huevo y revolver hasta listo.",
+      "Servir caliente."
+    ]
+  }
+];
+
+let recetaSeleccionada = null;
+
+function renderRecetas() {
+  const cont = document.getElementById("recipe-cards");
+  const empty = document.getElementById("recipe-empty");
+  const q = (document.getElementById("recipe-search")?.value || "").toLowerCase().trim();
+
+  const filtradas = recetas.filter(r =>
+    r.titulo.toLowerCase().includes(q) ||
+    r.desc.toLowerCase().includes(q)
+  );
+
+  cont.innerHTML = "";
+
+  if (filtradas.length === 0) {
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+
+  filtradas.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "recipe-card";
+    card.onclick = () => abrirDetalleReceta(r.id);
+
+    card.innerHTML = `
+      <div class="recipe-img">${r.emoji}</div>
+      <div class="recipe-body">
+        <div class="recipe-meta">
+          <span>PREP: ${r.prep}</span>
+          <span>COOK: ${r.cook}</span>
+        </div>
+        <div class="recipe-title">${r.titulo}</div>
+        <div class="recipe-desc">${r.desc}</div>
+      </div>
+    `;
+
+    cont.appendChild(card);
+  });
+}
+
+function abrirDetalleReceta(id) {
+  recetaSeleccionada = recetas.find(r => r.id === id);
+  if (!recetaSeleccionada) return;
+
+  document.getElementById("detail-hero").textContent = recetaSeleccionada.emoji;
+  document.getElementById("detail-title").textContent = recetaSeleccionada.titulo;
+
+  document.getElementById("detail-meta").innerHTML = `
+    <span>PREP: ${recetaSeleccionada.prep}</span>
+    <span>COOK: ${recetaSeleccionada.cook}</span>
+  `;
+
+  const ing = document.getElementById("detail-ingredients");
+  ing.innerHTML = "";
+  recetaSeleccionada.ingredientes.forEach(i => {
+    const li = document.createElement("li");
+    li.textContent = i;
+    ing.appendChild(li);
+  });
+
+  const steps = document.getElementById("detail-steps");
+  steps.innerHTML = "";
+  recetaSeleccionada.pasos.forEach(p => {
+    const li = document.createElement("li");
+    li.textContent = p;
+    steps.appendChild(li);
+  });
+
+  openScreen("recetaDetalle");
+}
 
 
     // 
