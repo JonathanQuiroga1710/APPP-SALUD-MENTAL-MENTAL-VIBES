@@ -290,16 +290,6 @@
       justify-content: space-between;
     }
 
-    /* Tips */
-    .tips-list {
-      flex: 1;
-      font-size: 0.85rem;
-      color: var(--text-main);
-      padding: 4px 2px;
-      line-height: 1.6;
-    }
-    .tips-list li { margin-bottom: 6px; }
-
     .credits {
       position: absolute;
       bottom: 4px;
@@ -312,7 +302,7 @@
 
     @media (max-height: 700px) { .phone-frame { height: 640px; } }
 
-    /* ====== RECETAS ====== */
+    /* ====== RECETAS / MENÚS TIPO GRID ====== */
     .search-wrap{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
 
     .search-input{
@@ -385,7 +375,7 @@
     .recipe-title{ font-size:0.85rem; font-weight:600; margin-bottom:6px; }
     .recipe-desc{ font-size:0.74rem; color: var(--text-muted); line-height:1.35; }
 
-    /* Detalle receta */
+    /* Detalle (receta y rutina) */
     .recipe-detail-box{
       flex:1;
       overflow-y:auto;
@@ -486,12 +476,14 @@
             <div class="bottom-row">
               <div class="icon-btn" onclick="openScreen('sueno')">😴</div>
               <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
+
+              <!-- ✅ ahora abre MENÚ de rutinas -->
               <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
-              <div class="icon-btn" onclick="openSpotify()">🎧</div>
 
-              <!-- 👇 Ahora el castillo abre el MENÚ de juegos -->
+              <div class="icon-btn" onclick="openScreen('musica')">🎧</div>
+
+
               <div class="icon-btn" onclick="openScreen('juegos')">🏰</div>
-
               <div class="icon-btn" onclick="openScreen('racha')">🔥</div>
             </div>
 
@@ -546,7 +538,7 @@
           <span>Espacio de sueño</span>
         </div>
         <div class="screen-content">
-          <ul class="tips-list">
+          <ul class="detail-list">
             <li>Intenta dormir entre 7 y 9 horas cada noche.</li>
             <li>Evita pantallas al menos 30 minutos antes de dormir.</li>
             <li>Haz una respiración profunda 1 minuto antes de acostarte.</li>
@@ -576,21 +568,114 @@
         </div>
       </div>
 
-      <!-- PANTALLA RITMO -->
+      <!-- ✅ RITMO ACTIVO (MENÚ MINIMALISTA TIPO COMIDA) -->
       <div id="screen-ritmo" class="screen">
         <div class="screen-header">
           <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Ritmo activo</span>
+          <span>Rutinas de ejercicios</span>
         </div>
+
         <div class="screen-content">
-          <ul class="tips-list">
-            <li>Levántate y estírate al menos 1 vez cada hora de estudio.</li>
-            <li>Camina 5 minutos entre clases para soltar tensión.</li>
-            <li>Una mini rutina de 10 minutos de movimiento cuenta: no tiene que ser perfecto.</li>
-            <li>Escucha música que te haga sentir energía mientras te mueves.</li>
-          </ul>
+          <div class="search-wrap">
+            <input id="rutina-search" class="search-input" type="text" placeholder="Buscar rutina..." oninput="renderCategoriasRutinas()" />
+          </div>
+
+          <div class="recipe-grid">
+            <div id="rutina-categorias" class="recipe-cards"></div>
+            <p id="rutina-empty" class="foro-empty" style="display:none;">
+              No se encontraron opciones con ese criterio.
+            </p>
+          </div>
         </div>
       </div>
+
+      <!-- ✅ LISTA DE RUTINAS POR CATEGORÍA -->
+      <div id="screen-rutinasLista" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('ritmo')">←</button>
+          <span id="rutinasLista-titulo">Rutinas</span>
+        </div>
+
+        <div class="screen-content">
+          <div class="search-wrap">
+            <input id="rutina-lista-search" class="search-input" type="text" placeholder="Buscar en esta categoría..." oninput="renderRutinasLista()" />
+          </div>
+
+          <div class="recipe-grid">
+            <div id="rutina-lista-cards" class="recipe-cards"></div>
+            <p id="rutina-lista-empty" class="foro-empty" style="display:none;">
+              No se encontraron rutinas en esta categoría.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ DETALLE DE RUTINA -->
+      <div id="screen-rutinaDetalle" class="screen">
+        <div class="screen-header">
+          <button class="back-btn" onclick="openScreen('rutinasLista')">←</button>
+          <span>Rutina</span>
+        </div>
+
+        <div class="screen-content recipe-detail-box">
+          <div class="detail-card">
+            <div id="rutina-hero" class="detail-hero">🧘</div>
+
+            <div id="rutina-title" class="detail-title">Título</div>
+            <div id="rutina-meta" class="detail-meta"></div>
+
+            <div class="detail-section-title">Instrucciones</div>
+            <ol id="rutina-steps" class="detail-list"></ol>
+
+            <div class="detail-section-title">Tip</div>
+            <div id="rutina-tip" style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;"></div>
+
+            <div style="margin-top:14px;">
+              <button class="btn-main secondary" onclick="openScreen('rutinasLista')">Volver a rutinas</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ✅ MÚSICA (MENÚ TIPO COMIDA/RUTINAS) -->
+<div id="screen-musica" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('home')">←</button>
+    <span>Música (Spotify)</span>
+  </div>
+
+  <div class="screen-content">
+    <div class="search-wrap">
+      <input id="music-search" class="search-input" type="text" placeholder="Buscar playlist..." oninput="renderPlaylists()" />
+    </div>
+
+    <div class="recipe-grid">
+      <div id="music-cards" class="recipe-cards"></div>
+      <p id="music-empty" class="foro-empty" style="display:none;">
+        No se encontraron playlists con ese criterio.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ DETALLE PLAYLIST (EMBED DENTRO DE LA APP) -->
+<div id="screen-playlist" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="openScreen('musica')">←</button>
+    <span id="playlist-title">Playlist</span>
+  </div>
+
+  <div class="screen-content recipe-detail-box">
+    <div class="detail-card">
+      <div id="playlist-hero" class="detail-hero">🎧</div>
+
+      <div id="playlist-subtitle" style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">
+        Reproductor dentro de la app.
+      </div>
+
+      <div id="playlist-embed"></div>
+    </div>
+  </div>
+</div>
 
       <!-- ✅ PANTALLA MENÚ DE JUEGOS -->
       <div id="screen-juegos" class="screen">
@@ -786,6 +871,24 @@
 
         case 'ritmo':
           document.getElementById('screen-ritmo').classList.add('active');
+          setTimeout(renderCategoriasRutinas, 0);
+          break;
+
+        case 'rutinasLista':
+          document.getElementById('screen-rutinasLista').classList.add('active');
+          setTimeout(renderRutinasLista, 0);
+          break;
+
+        case 'rutinaDetalle':
+          document.getElementById('screen-rutinaDetalle').classList.add('active');
+          break;
+        case 'musica':
+          document.getElementById('screen-musica').classList.add('active');
+          setTimeout(renderPlaylists, 0);
+          break;
+
+        case 'playlist':
+          document.getElementById('screen-playlist').classList.add('active');
           break;
 
         case 'juegos':
@@ -863,9 +966,90 @@
       foroInput.value = "";
     }
 
-    function openSpotify() {
-      window.open("https://open.spotify.com/playlist/4cIQ7fEAGZ5yAQ0sGQOc96?si=h7w6VGlQT6-xlVqOBqo8IQ&pi=y6v9Sw_jS4WsR", "_blank");
-    }
+    // ✅ MÚSICA (MENÚ + EMBED DENTRO DE LA APP)
+let playlistActual = null;
+
+const playlists = [
+  {
+    id: "p1",
+    emoji: "🎧",
+    titulo: "Playlist 1",
+    desc: "Escucha dentro de la app.",
+    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2BRwIRg9nOSo9PldqJX31D?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+  },
+  {
+    id: "p2",
+    emoji: "🎶",
+    titulo: "Playlist 2",
+    desc: "Para concentrarte / estudiar.",
+    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/006nDhWONiodRpiIYvgxzx?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+  },
+  {
+    id: "p3",
+    emoji: "🌙",
+    titulo: "Playlist 3",
+    desc: "Relajación / calma.",
+    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6fUzotupnO3x2T5rdBglHd?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+  },
+  {
+    id: "p4",
+    emoji: "💿",
+    titulo: "Álbum (Spotify)",
+    desc: "Reproductor dentro de la app.",
+    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3wnuxUF9G1tJzhGVob5Z5m?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+  }
+];
+
+function renderPlaylists(){
+  const cont = document.getElementById("music-cards");
+  const empty = document.getElementById("music-empty");
+  const q = (document.getElementById("music-search")?.value || "").toLowerCase().trim();
+
+  const filtradas = playlists.filter(p =>
+    p.titulo.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
+  );
+
+  cont.innerHTML = "";
+  if(filtradas.length === 0){
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+
+  filtradas.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "recipe-card";
+    card.onclick = () => abrirPlaylist(p.id);
+
+    card.innerHTML = `
+      <div class="recipe-img">${p.emoji}</div>
+      <div class="recipe-body">
+        <div class="recipe-meta">
+          <span>SPOTIFY</span>
+          <span>EMBED</span>
+        </div>
+        <div class="recipe-title">${p.titulo}</div>
+        <div class="recipe-desc">${p.desc}</div>
+      </div>
+    `;
+    cont.appendChild(card);
+  });
+}
+
+function abrirPlaylist(id){
+  playlistActual = playlists.find(p => p.id === id);
+  if(!playlistActual) return;
+
+  document.getElementById("playlist-title").textContent = playlistActual.titulo;
+  document.getElementById("playlist-hero").textContent = playlistActual.emoji;
+
+  // Inserta el iframe dentro de la app
+  document.getElementById("playlist-embed").innerHTML = playlistActual.iframe;
+
+  openScreen("playlist");
+  document.querySelector("#screen-playlist .recipe-detail-box").scrollTop = 0;
+}
+
 
     // ✅ MENÚ DE JUEGOS (categorías)
     let juegoActual = null;
@@ -940,6 +1124,225 @@
       const url = isIOS ? juegoActual.linkIOS : juegoActual.linkAndroid;
 
       window.open(url, "_blank");
+    }
+
+    // ✅ RUTINAS (NUEVO: menú tipo Comida)
+    let categoriaRutinaActual = null;
+
+    const categoriasRutinas = [
+      { id: "energia", emoji: "⚡", titulo: "Energía (5–10 min)", desc: "Activación rápida para despejarte." },
+      { id: "estudio",  emoji: "📚", titulo: "Pausas de estudio", desc: "Movimientos suaves entre clases." },
+      { id: "cuello",   emoji: "💆", titulo: "Cuello y hombros", desc: "Tensión por pantalla y postura." },
+      { id: "espalda",  emoji: "🧍", titulo: "Espalda y postura", desc: "Alineación y movilidad." },
+      { id: "piernas",  emoji: "🦵", titulo: "Piernas (sin impacto)", desc: "Circulación y descanso." },
+      { id: "respira",  emoji: "🌬️", titulo: "Respiración / calma", desc: "Bajar revoluciones en 3–6 min." },
+    ];
+
+    const rutinas = [
+      {
+        id: 1,
+        cat: "energia",
+        emoji: "⚡",
+        titulo: "Activación express",
+        dur: "7 min",
+        nivel: "Suave",
+        pasos: [
+          "30s: marchar en el lugar.",
+          "30s: círculos de brazos (suave).",
+          "6 rep: sentadilla corta (sin bajar mucho).",
+          "30s: rodillas arriba suave.",
+          "30s: estiramiento lateral (derecha/izquierda).",
+          "1 min: respiración lenta."
+        ],
+        tip: "Si estás sentado hace mucho, empieza más suave y aumenta poco a poco."
+      },
+      {
+        id: 2,
+        cat: "estudio",
+        emoji: "📚",
+        titulo: "Pausa 5 minutos",
+        dur: "5 min",
+        nivel: "Muy suave",
+        pasos: [
+          "1 min: caminar por tu habitación.",
+          "30s: estirar pantorrillas (cada lado).",
+          "30s: apertura de pecho (manos atrás).",
+          "1 min: estirar espalda (gato-vaca de pie).",
+          "1 min: respiración 4-4 (inhalo 4, exhalo 4)."
+        ],
+        tip: "Haz esta pausa cada 45–60 min de estudio."
+      },
+      {
+        id: 3,
+        cat: "cuello",
+        emoji: "💆",
+        titulo: "Cuello & hombros",
+        dur: "6 min",
+        nivel: "Suave",
+        pasos: [
+          "30s: mentón hacia el pecho (sin forzar).",
+          "30s: oreja al hombro (derecha/izquierda).",
+          "8 rep: encoger hombros arriba/abajo.",
+          "8 rep: círculos de hombros hacia atrás.",
+          "30s: estirar trapecio (cada lado).",
+          "1 min: respiración lenta."
+        ],
+        tip: "No gires el cuello fuerte; todo debe sentirse cómodo."
+      },
+      {
+        id: 4,
+        cat: "espalda",
+        emoji: "🧍",
+        titulo: "Postura y espalda",
+        dur: "8 min",
+        nivel: "Suave",
+        pasos: [
+          "1 min: estiramiento de pecho en marco de puerta.",
+          "8 rep: bisagra de cadera (como reverencia).",
+          "8 rep: gato-vaca (de pie apoyado en muslos).",
+          "30s: estirar espalda (brazos al frente).",
+          "30s: torsión suave (derecha/izquierda).",
+          "1 min: respiración."
+        ],
+        tip: "Mantén abdomen suave activado para proteger zona lumbar."
+      },
+      {
+        id: 5,
+        cat: "piernas",
+        emoji: "🦵",
+        titulo: "Piernas sin impacto",
+        dur: "9 min",
+        nivel: "Moderado suave",
+        pasos: [
+          "1 min: caminar en el lugar.",
+          "8 rep: elevar talones (pantorrilla).",
+          "8 rep: sentadilla corta.",
+          "30s: estirar cuádriceps (cada lado).",
+          "30s: estirar isquios (pierna al frente).",
+          "1 min: respiración."
+        ],
+        tip: "Si te mareas, baja la intensidad y respira más lento."
+      },
+      {
+        id: 6,
+        cat: "respira",
+        emoji: "🌬️",
+        titulo: "Calma en 4 minutos",
+        dur: "4 min",
+        nivel: "Muy suave",
+        pasos: [
+          "1 min: inhalo 4 / exhalo 6.",
+          "1 min: hombros relajados, mandíbula suelta.",
+          "1 min: escaneo corporal (de cabeza a pies).",
+          "1 min: inhalo 4 / exhalo 6."
+        ],
+        tip: "Si te cuesta, prueba exhalar un poquito más largo que inhalar."
+      }
+    ];
+
+    function renderCategoriasRutinas(){
+      const cont = document.getElementById("rutina-categorias");
+      const empty = document.getElementById("rutina-empty");
+      const q = (document.getElementById("rutina-search")?.value || "").toLowerCase().trim();
+
+      const filtradas = categoriasRutinas.filter(c =>
+        c.titulo.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)
+      );
+
+      cont.innerHTML = "";
+      if(filtradas.length === 0){
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      filtradas.forEach(c => {
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+        card.onclick = () => abrirCategoriaRutina(c.id);
+
+        card.innerHTML = `
+          <div class="recipe-img">${c.emoji}</div>
+          <div class="recipe-body">
+            <div class="recipe-meta">
+              <span>CATEGORÍA</span>
+              <span>RUTINAS</span>
+            </div>
+            <div class="recipe-title">${c.titulo}</div>
+            <div class="recipe-desc">${c.desc}</div>
+          </div>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    function abrirCategoriaRutina(catId){
+      categoriaRutinaActual = catId;
+      const cat = categoriasRutinas.find(c => c.id === catId);
+      document.getElementById("rutinasLista-titulo").textContent = cat ? cat.titulo : "Rutinas";
+      document.getElementById("rutina-lista-search").value = "";
+      openScreen("rutinasLista");
+    }
+
+    function renderRutinasLista(){
+      const cont = document.getElementById("rutina-lista-cards");
+      const empty = document.getElementById("rutina-lista-empty");
+      const q = (document.getElementById("rutina-lista-search")?.value || "").toLowerCase().trim();
+
+      const filtradas = rutinas
+        .filter(r => r.cat === categoriaRutinaActual)
+        .filter(r => r.titulo.toLowerCase().includes(q) || r.nivel.toLowerCase().includes(q) || r.dur.toLowerCase().includes(q));
+
+      cont.innerHTML = "";
+      if(filtradas.length === 0){
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      filtradas.forEach(r => {
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+        card.onclick = () => abrirDetalleRutina(r.id);
+
+        card.innerHTML = `
+          <div class="recipe-img">${r.emoji}</div>
+          <div class="recipe-body">
+            <div class="recipe-meta">
+              <span>DUR: ${r.dur}</span>
+              <span>${r.nivel}</span>
+            </div>
+            <div class="recipe-title">${r.titulo}</div>
+            <div class="recipe-desc">Rutina guiada y simple para hacer en casa.</div>
+          </div>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    function abrirDetalleRutina(id){
+      const rutina = rutinas.find(r => r.id === id);
+      if(!rutina) return;
+
+      document.getElementById("rutina-hero").textContent = rutina.emoji;
+      document.getElementById("rutina-title").textContent = rutina.titulo;
+      document.getElementById("rutina-meta").innerHTML = `
+        <span>DUR: ${rutina.dur}</span>
+        <span>NIVEL: ${rutina.nivel}</span>
+      `;
+
+      const steps = document.getElementById("rutina-steps");
+      steps.innerHTML = "";
+      rutina.pasos.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        steps.appendChild(li);
+      });
+
+      document.getElementById("rutina-tip").textContent = rutina.tip || "";
+
+      openScreen("rutinaDetalle");
+      document.querySelector("#screen-rutinaDetalle .recipe-detail-box").scrollTop = 0;
     }
 
     // ====== RECETAS ======
