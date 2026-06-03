@@ -1,1558 +1,517 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>MentalVibes – Mockup Web</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fuente -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --bg-app: #062733;
-      --bg-card: #02151d;
-      --accent:  #50c4a7;
-      --accent-soft: #3ea894;
-      --text-main: #f5f7f8;
-      --text-muted: #9fb3bd;
-    }
+<title>Cuestionario Matemático</title>
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<!-- MathJax -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #0c3a4b 0, #020a0f 60%);
-      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text-main);
-    }
+<script async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 
-    .phone-frame {
-      width: 360px;
-      max-width: 95vw;
-      height: 720px;
-      max-height: 95vh;
-      background: var(--bg-app);
-      border-radius: 32px;
-      padding: 18px 18px 24px;
-      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.7), 0 0 0 8px rgba(255, 255, 255, 0.02);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
+<style>
 
-    .phone-inner {
-      background: var(--bg-card);
-      border-radius: 24px;
-      padding: 18px 16px 22px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
 
-    .status-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
+.contenedor{
+    background:white;
+    width:750px;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0px 5px 15px rgba(0,0,0,0.1);
+}
 
-    .logo-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 18px;
-    }
+#pregunta{
+    font-size:22px;
+    line-height:1.7;
+    margin-bottom:25px;
+    font-weight:bold;
+}
 
-    .logo-brain {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
+.opcion{
+    width:100%;
+    padding:16px;
+    margin-top:12px;
+    border:none;
+    border-radius:12px;
+    background:#e8e8e8;
+    font-size:22px;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-    .logo-text {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-    }
+.opcion:hover{
+    background:#d6d6d6;
+}
 
-    /* Botones */
-    .btn-main {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 999px;
-      border: none;
-      outline: none;
-      background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-      color: #02151d;
-      font-size: 0.98rem;
-      font-weight: 500;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(4, 80, 64, 0.65);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.1s ease;
-    }
+#mensaje{
+    margin-top:25px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
 
-    .btn-main.secondary {
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--text-main);
-      box-shadow: none;
-    }
+.correcta{
+    color:green;
+}
 
-    .btn-main:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
-      box-shadow: 0 9px 22px rgba(4, 80, 64, 0.7);
-    }
+.incorrecta{
+    color:red;
+}
 
-    .btn-main.secondary:hover {
-      background: rgba(80, 196, 167, 0.08);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    }
+.botones{
+    margin-top:30px;
+    display:flex;
+    justify-content:flex-end;
+}
 
-    .section-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 6px;
-    }
+.siguiente{
+    background:#4CAF50;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:12px;
+    font-size:20px;
+    cursor:pointer;
+}
 
-    .bottom-tools {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+.siguiente:hover{
+    background:#3d9441;
+}
 
-    .bottom-row {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
+#resultadoFinal{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:30px;
+}
 
-    .icon-btn {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: 1.5px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      color: var(--accent);
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
-    }
+</style>
 
-    .icon-btn:hover {
-      background: rgba(80, 196, 167, 0.16);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    .bottom-caption {
-      font-size: 0.72rem;
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    /* Pantallas */
-    .screen {
-      display: none;
-      flex: 1;
-      flex-direction: column;
-      overflow: hidden;
-      min-height: 0;
-    }
-
-    .screen.active { display: flex; }
-
-    .screen-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
-    .screen-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      font-size: 0.9rem;
-      color: var(--text-main);
-    }
-
-    .back-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1rem;
-      color: var(--accent);
-      background: transparent;
-      transition: background 0.15s ease;
-    }
-
-    .back-btn:hover { background: rgba(80, 196, 167, 0.12); }
-
-    /* Frase */
-    .frase-box {
-      flex: 1;
-      border-radius: 18px;
-      border: 1px solid rgba(80, 196, 167, 0.4);
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 0.98rem;
-      line-height: 1.5;
-      color: var(--text-main);
-      background: rgba(2, 21, 29, 0.9);
-    }
-
-    .frase-author { margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); }
-    .frase-actions { margin-top: 16px; }
-
-    /* Foro */
-    .foro-form { margin-bottom: 12px; }
-
-    .foro-textarea {
-      width: 100%;
-      min-height: 70px;
-      max-height: 120px;
-      resize: vertical;
-      border-radius: 12px;
-      border: 1px solid rgba(159, 179, 189, 0.6);
-      background: rgba(1, 11, 16, 0.9);
-      color: var(--text-main);
-      padding: 10px 12px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      outline: none;
-    }
-
-    .foro-textarea:focus { border-color: var(--accent); }
-
-    .foro-list {
-      flex: 1;
-      overflow-y: auto;
-      padding-right: 4px;
-      margin-top: 6px;
-      min-height: 0;
-    }
-
-    .foro-empty { font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-align: center; }
-
-    .foro-post {
-      background: rgba(5, 31, 42, 0.9);
-      border-radius: 12px;
-      padding: 10px 11px;
-      margin-bottom: 8px;
-      font-size: 0.82rem;
-      border: 1px solid rgba(80, 196, 167, 0.25);
-    }
-
-    .foro-meta {
-      margin-top: 6px;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .credits {
-      position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.6rem;
-      opacity: 0.55;
-      color: var(--text-muted);
-    }
-
-    @media (max-height: 700px) { .phone-frame { height: 640px; } }
-
-    /* ====== RECETAS / MENÚS TIPO GRID ====== */
-    .search-wrap{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-
-    .search-input{
-      width:100%;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(159,179,189,0.45);
-      background: rgba(1, 11, 16, 0.9);
-      color: var(--text-main);
-      outline:none;
-      font-family: inherit;
-      font-size: 0.85rem;
-    }
-    .search-input:focus{ border-color: var(--accent); }
-
-    .recipe-grid{
-      flex:1;
-      overflow-y:auto;
-      padding-right:6px;
-      min-height: 0;
-    }
-
-    .recipe-grid::-webkit-scrollbar{ width:6px; }
-    .recipe-grid::-webkit-scrollbar-thumb{
-      background: rgba(80,196,167,0.35);
-      border-radius:999px;
-    }
-
-    .recipe-cards{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-
-    .recipe-card{
-      border-radius:14px;
-      overflow:hidden;
-      background: rgba(5, 31, 42, 0.88);
-      border:1px solid rgba(80,196,167,0.22);
-      cursor:pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-    }
-
-    .recipe-card:hover{
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 10px 18px rgba(0,0,0,0.45);
-    }
-
-    .recipe-img{
-      height:92px;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: radial-gradient(circle at top, rgba(80,196,167,0.20), rgba(0,0,0,0.00));
-      font-size: 2rem;
-    }
-
-    .recipe-body{ padding:10px 10px 12px; }
-
-    .recipe-meta{
-      display:flex;
-      justify-content:space-between;
-      font-size:0.68rem;
-      color: var(--text-muted);
-      margin-bottom:6px;
-    }
-
-    .recipe-title{ font-size:0.85rem; font-weight:600; margin-bottom:6px; }
-    .recipe-desc{ font-size:0.74rem; color: var(--text-muted); line-height:1.35; }
-
-    /* Detalle (receta y rutina) */
-    .recipe-detail-box{
-      flex:1;
-      overflow-y:auto;
-      padding-right:6px;
-      min-height: 0;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .detail-card{
-      border-radius:16px;
-      border:1px solid rgba(80,196,167,0.25);
-      background: rgba(5, 31, 42, 0.88);
-      padding:14px;
-    }
-
-    .detail-hero{
-      height: 180px;
-      width: 100%;
-      border-radius: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 4rem;
-      margin-bottom: 12px;
-      background: radial-gradient(circle at top, rgba(80,196,167,0.22), rgba(0,0,0,0));
-      border: 1px solid rgba(80,196,167,0.18);
-    }
-
-    .detail-title{ font-size:1rem; font-weight:600; margin-bottom:8px; }
-
-    .detail-meta{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      font-size:0.75rem;
-      color: var(--text-muted);
-      margin-bottom:10px;
-    }
-
-    .detail-section-title{
-      font-size:0.78rem;
-      letter-spacing:0.08em;
-      text-transform:uppercase;
-      color: var(--text-muted);
-      margin:12px 0 6px;
-    }
-
-    .detail-list{
-      font-size:0.85rem;
-      line-height:1.6;
-      padding-left:16px;
-    }
-    .detail-list li{ margin-bottom:6px; }
-
-    /* Racha */
-    .week-day{
-       border:1px solid rgba(80,196,167,0.22);
-       background: rgba(1, 11, 16, 0.55);
-       border-radius: 12px;
-       padding: 10px 0;
-       text-align:center;
-       font-size: 0.75rem;
-       color: var(--text-muted);
-    }
-    .week-day.done{
-      background: rgba(80,196,167,0.20);
-      border-color: rgba(80,196,167,0.5);
-      color: var(--text-main);
-    }
-  </style>
 </head>
 
 <body>
-  <div class="phone-frame">
-    <div class="phone-inner">
 
-      <div class="status-bar">
-        <span>9:41</span>
-        <span>MentalVibes</span>
-        <span>🔋84%</span>
-      </div>
+<div class="contenedor">
 
-      <div class="logo-area">
-        <div class="logo-brain">MV</div>
-        <div class="logo-text">bienestar universitario</div>
-      </div>
+    <div id="pregunta"></div>
 
-      <!-- PANTALLA INICIO -->
-      <div id="screen-home" class="screen active">
-        <div class="screen-content">
-          <div class="main-actions">
-            <button class="btn-main" onclick="openScreen('frase')">Frase del día</button>
-            <button class="btn-main secondary" onclick="openScreen('foro')">Foro anónimo</button>
-          </div>
+    <div id="opciones"></div>
 
-          <div class="bottom-tools">
-            <div class="section-label">cuidar tu cuerpo para cuidar tu mente</div>
-            <div class="bottom-row">
-              <div class="icon-btn" onclick="openScreen('sueno')">😴</div>
-              <div class="icon-btn" onclick="openScreen('comida')">🍽️</div>
+    <div id="mensaje"></div>
 
-              <!-- ✅ ahora abre MENÚ de rutinas -->
-              <div class="icon-btn" onclick="openScreen('ritmo')">🧘</div>
+    <div class="botones">
 
-              <div class="icon-btn" onclick="openScreen('musica')">🎧</div>
+        <button class="siguiente"
+        onclick="siguientePregunta()">
 
+            Siguiente →
 
-              <div class="icon-btn" onclick="openScreen('juegos')">🏰</div>
-              <div class="icon-btn" onclick="openScreen('racha')">🔥</div>
-            </div>
+        </button>
 
-            <p class="bottom-caption">Sueño &nbsp;·&nbsp; Comida &nbsp;·&nbsp; Ritmo activo</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANTALLA FRASE -->
-      <div id="screen-frase" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Frase del día</span>
-        </div>
-        <div class="screen-content">
-          <div class="frase-box">
-            <div>
-              <div id="frase-texto"></div>
-              <div id="frase-autor" class="frase-author"></div>
-            </div>
-          </div>
-          <div class="frase-actions">
-            <button class="btn-main secondary" onclick="nuevaFrase()">Otra frase ✨</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANTALLA FORO -->
-      <div id="screen-foro" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Foro anónimo</span>
-        </div>
-        <div class="screen-content">
-          <form class="foro-form" onsubmit="publicar(event)">
-            <textarea id="foro-input" class="foro-textarea" placeholder="Escribe lo que sientes hoy... (tu mensaje será anónimo)"></textarea>
-            <div style="margin-top: 6px; display:flex; justify-content:flex-end;">
-              <button type="submit" class="btn-main" style="width:auto; padding:8px 14px; font-size:0.8rem;">Publicar</button>
-            </div>
-          </form>
-
-          <div id="foro-lista" class="foro-list">
-            <p class="foro-empty" id="foro-empty">Todavía no hay mensajes. Sé la primera persona en compartir algo 💬</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANTALLA SUEÑO -->
-      <div id="screen-sueno" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Espacio de sueño</span>
-        </div>
-        <div class="screen-content">
-          <ul class="detail-list">
-            <li>Intenta dormir entre 7 y 9 horas cada noche.</li>
-            <li>Evita pantallas al menos 30 minutos antes de dormir.</li>
-            <li>Haz una respiración profunda 1 minuto antes de acostarte.</li>
-            <li>Si no puedes dormir, no te culpes: tu cuerpo también está aprendiendo.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- PANTALLA COMIDA -->
-      <div id="screen-comida" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Comidas rápidas y sanas</span>
-        </div>
-
-        <div class="screen-content">
-          <div class="search-wrap">
-            <input id="recipe-search" class="search-input" type="text" placeholder="Buscar receta..." oninput="renderRecetas()" />
-          </div>
-
-          <div class="recipe-grid">
-            <div id="recipe-cards" class="recipe-cards"></div>
-            <p id="recipe-empty" class="foro-empty" style="display:none;">
-              No se encontraron recetas con ese criterio.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ✅ RITMO ACTIVO (MENÚ MINIMALISTA TIPO COMIDA) -->
-      <div id="screen-ritmo" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Rutinas de ejercicios</span>
-        </div>
-
-        <div class="screen-content">
-          <div class="search-wrap">
-            <input id="rutina-search" class="search-input" type="text" placeholder="Buscar rutina..." oninput="renderCategoriasRutinas()" />
-          </div>
-
-          <div class="recipe-grid">
-            <div id="rutina-categorias" class="recipe-cards"></div>
-            <p id="rutina-empty" class="foro-empty" style="display:none;">
-              No se encontraron opciones con ese criterio.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ✅ LISTA DE RUTINAS POR CATEGORÍA -->
-      <div id="screen-rutinasLista" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('ritmo')">←</button>
-          <span id="rutinasLista-titulo">Rutinas</span>
-        </div>
-
-        <div class="screen-content">
-          <div class="search-wrap">
-            <input id="rutina-lista-search" class="search-input" type="text" placeholder="Buscar en esta categoría..." oninput="renderRutinasLista()" />
-          </div>
-
-          <div class="recipe-grid">
-            <div id="rutina-lista-cards" class="recipe-cards"></div>
-            <p id="rutina-lista-empty" class="foro-empty" style="display:none;">
-              No se encontraron rutinas en esta categoría.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ✅ DETALLE DE RUTINA -->
-      <div id="screen-rutinaDetalle" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('rutinasLista')">←</button>
-          <span>Rutina</span>
-        </div>
-
-        <div class="screen-content recipe-detail-box">
-          <div class="detail-card">
-            <div id="rutina-hero" class="detail-hero">🧘</div>
-
-            <div id="rutina-title" class="detail-title">Título</div>
-            <div id="rutina-meta" class="detail-meta"></div>
-
-            <div class="detail-section-title">Instrucciones</div>
-            <ol id="rutina-steps" class="detail-list"></ol>
-
-            <div class="detail-section-title">Tip</div>
-            <div id="rutina-tip" style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;"></div>
-
-            <div style="margin-top:14px;">
-              <button class="btn-main secondary" onclick="openScreen('rutinasLista')">Volver a rutinas</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ✅ MÚSICA (MENÚ TIPO COMIDA/RUTINAS) -->
-<div id="screen-musica" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('home')">←</button>
-    <span>Música (Spotify)</span>
-  </div>
-
-  <div class="screen-content">
-    <div class="search-wrap">
-      <input id="music-search" class="search-input" type="text" placeholder="Buscar playlist..." oninput="renderPlaylists()" />
     </div>
 
-    <div class="recipe-grid">
-      <div id="music-cards" class="recipe-cards"></div>
-      <p id="music-empty" class="foro-empty" style="display:none;">
-        No se encontraron playlists con ese criterio.
-      </p>
-    </div>
-  </div>
+    <div id="resultadoFinal"></div>
+
 </div>
 
-<!-- ✅ DETALLE PLAYLIST (EMBED DENTRO DE LA APP) -->
-<div id="screen-playlist" class="screen">
-  <div class="screen-header">
-    <button class="back-btn" onclick="openScreen('musica')">←</button>
-    <span id="playlist-title">Playlist</span>
-  </div>
+<script>
 
-  <div class="screen-content recipe-detail-box">
-    <div class="detail-card">
-      <div id="playlist-hero" class="detail-hero">🎧</div>
+const preguntas = [
 
-      <div id="playlist-subtitle" style="font-size:0.85rem;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">
-        Reproductor dentro de la app.
-      </div>
+{
+pregunta: `
+\\[
+41)\\text{ Si } x,y>0 \\text{ y } a\\in\\mathbb{R}^{+}-\\{1\\},
+\\text{ entonces es VERDAD que:}
+\\]
+`,
+opciones:[
+"a) \\(\\log_a(x/y)=\\log_a(x)/\\log_a(y)\\)",
+"b) \\(\\log_a(x)\\log_a(y)=\\log_a(x)+\\log_a(y)\\)",
+"c) \\(\\log_a(xy)=\\log_a(x)+\\log_a(y)\\)",
+"d) \\(\\log_a(x-y)=\\log_a(x)-\\log_a(y)\\)",
+"e) \\(\\log_a(x)/\\log_a(y)=\\log_a(x)-\\log_a(y)\\)"
+],
+correcta:2
+},
 
-      <div id="playlist-embed"></div>
-    </div>
-  </div>
-</div>
+{
+pregunta: `
+\\[
+42)\\text{ Sean las proposiciones } a,b,c
+\\text{ tales que }
+a\\vee b \\equiv 0
+\\text{ y }
+(\\neg a \\wedge c)\\to b \\equiv 1.
+\\]
+\\[
+\\text{ Entonces es VERDAD que:}
+\\]
+`,
+opciones:[
+"a) Las tres proposiciones son verdaderas",
+"b) Solamente las proposiciones a y b son verdaderas",
+"c) Solamente las proposiciones a y c son verdaderas",
+"d) Solamente las proposiciones b y c son verdaderas",
+"e) Las tres proposiciones son falsas"
+],
+correcta:4
+},
 
-      <!-- ✅ PANTALLA MENÚ DE JUEGOS -->
-      <div id="screen-juegos" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Juegos</span>
-        </div>
+{
+pregunta: `
+\\[
+43)\\text{ El argumento del número complejo }
+z=\\frac{-2+2i}{\\sqrt3+3i}
+\\text{ es igual a:}
+\\]
+`,
+opciones:[
+"a) \\(\\frac{\\pi}{3}\\)",
+"b) \\(\\frac{5\\pi}{12}\\)",
+"c) \\(\\frac{3\\pi}{4}\\)",
+"d) \\(\\frac{13\\pi}{12}\\)",
+"e) \\(\\frac{7\\pi}{12}\\)"
+],
+correcta:1
+},
 
-        <div class="screen-content">
-          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px; text-align:center;">
-            Elige una opción rápida para desconectar un momento 🧠🎮
-          </p>
+{
+pregunta: `
+\\[
+45)\\text{ El dominio de la función invertible }
+f(x)=\\frac12\\arcsen(3x-1)
+\\text{ es:}
+\\]
+`,
+opciones:[
+"a) \\([-\\frac13,\\frac13]\\)",
+"b) \\([-1,1]\\)",
+"c) \\([-\\frac23,\\frac23]\\)",
+"d) \\([-\\frac23,0]\\)",
+"e) \\([0,\\frac23]\\)"
+],
+correcta:4
+},
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; overflow:auto; min-height:0; padding-right:4px;">
-            <div class="detail-card" onclick="openJuego('tetris')">
-              <div style="font-size:2rem; text-align:center;">🧠</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Tetris</div>
-              <div style="margin-top:4px; text-align:center; color:var(--text-muted); font-size:0.75rem;">clásico / enfoque</div>
-            </div>
+{
+pregunta: `
+\\[
+46)\\text{ Si } x,y\\in\\mathbb{R},
+\\text{ entonces }
+(\\cos(x)+\\sen(x))^2-(\\cos(x)-\\sen(x))^2
+\\]
+\\[
+\\text{ es igual a:}
+\\]
+`,
+opciones:[
+"a) 2",
+"b) \\(-2\\sen(2x)\\)",
+"c) \\(-2\\cos(2x)\\)",
+"d) \\(2\\sen(2x)\\)",
+"e) \\(2\\cos(2x)\\)"
+],
+correcta:3
+},
 
-            <div class="detail-card" onclick="openJuego('casual')">
-              <div style="font-size:2rem; text-align:center;">🎮</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Casual / Puzzle</div>
-              <div style="margin-top:4px; text-align:center; color:var(--text-muted); font-size:0.75rem;">tipo Flower</div>
-            </div>
+{
+pregunta: `
+\\[
+47)\\text{ El valor numérico de la expresión:}
+\\]
+\\[
+\\frac{
+2\\mu(1-e)+|2-3sgn(2-e)|
+}{
+\\sqrt3\\cos\\left(\\frac{11\\pi}{6}\\right)
+}
+\\]
+`,
+opciones:[
+"a) \\(\\frac23\\)",
+"b) \\(\\frac53\\)",
+"c) \\(\\frac{10}{3}\\)",
+"d) \\(-\\frac23\\)",
+"e) \\(-\\frac{10}{3}\\)"
+],
+correcta:2
+},
 
-            <div class="detail-card" onclick="openScreen('puzzles')">
-              <div style="font-size:2rem; text-align:center;">🧩</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Rompecabezas</div>
-              <div style="margin-top:4px; text-align:center; color:var(--text-muted); font-size:0.75rem;">sudoku / bloques / rubik</div>
-            </div>
+{
+pregunta: `
+\\[
+48)\\text{ El vértice de la parábola }
+y^2-4y-6x-8=0
+\\text{ es:}
+\\]
+`,
+opciones:[
+"a) (2,-2)",
+"b) (-2,2)",
+"c) (2,7)",
+"d) (2,-3)",
+"e) (4,-4)"
+],
+correcta:1
+},
 
-            <div class="detail-card" onclick="openJuego('cozy')">
-              <div style="font-size:2rem; text-align:center;">🌿</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Cozy games</div>
-              <div style="margin-top:4px; text-align:center; color:var(--text-muted); font-size:0.75rem;">calmados / narrativa</div>
-            </div>
+{
+pregunta: `
+\\[
+49)\\text{ Si }
+A
+\\text{ es un conjunto tal que }
+\\{x,\\{y\\},\\{x,y\\}\\}\\in P(A),
+\\]
+\\[
+\\text{ entonces es VERDAD que:}
+\\]
+`,
+opciones:[
+"a) \\(\\{y\\}\\in P(A)\\)",
+"b) \\(\\{x,\\{y\\}\\}\\in P(A)\\)",
+"c) \\(y\\in A\\)",
+"d) \\(\\{x,y\\}\\in P(A)\\)",
+"e) \\(\\{x\\}\\in A\\)"
+],
+correcta:0
+},
 
-            <div class="detail-card" onclick="openJuego('bienestar')">
-              <div style="font-size:2rem; text-align:center;">🧘</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Bienestar</div>
-              <div style="margin-top:4px; text-align:center; color:var(--text-muted); font-size:0.75rem;">juegos para relajación</div>
-            </div>
+{
+pregunta: `
+\\[
+54)\\text{ Considerando las restricciones del caso,}
+\\]
+\\[
+x\\left(
+\\frac{x+1}{x-1}-\\frac{x}{x+1}
+\\right)
+\\left(
+x-\\frac1x
+\\right)
+\\]
+\\[
+\\text{ se obtiene:}
+\\]
+`,
+opciones:[
+"a) \\(x-3\\)",
+"b) \\(3+x\\)",
+"c) \\(1-3x\\)",
+"d) \\(3x+1\\)",
+"e) \\(3x-1\\)"
+],
+correcta:3
+},
 
-            <div class="detail-card" onclick="openJuego('asmr')">
-              <div style="font-size:2rem; text-align:center;">📱</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Relax / ASMR</div>
-              <div style="margin-top:4px; text-align:center; color:var(--text-muted); font-size:0.75rem;">sonidos / calma</div>
-            </div>
-          </div>
-        </div>
-      </div>
+{
+pregunta: `
+\\[
+57)\\text{ Si un cilindro de radio } r
+\\text{ está inscrito en una esfera de radio } 2r,
+\\]
+\\[
+\\text{ entonces la altura del cilindro es igual a:}
+\\]
+`,
+opciones:[
+"a) \\(2r\\)",
+"b) \\(2\\sqrt2 r\\)",
+"c) \\(2\\sqrt3 r\\)",
+"d) \\(3r\\)",
+"e) \\(2\\sqrt5 r\\)"
+],
+correcta:2
+},
 
-      <!-- ✅ SUBMENÚ PUZZLES -->
-      <div id="screen-puzzles" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('juegos')">←</button>
-          <span>Rompecabezas</span>
-        </div>
+{
+pregunta: `
+\\[
+58)\\text{ Las edades de Luis, Juan y Pedro son enteros consecutivos.}
+\\]
+\\[
+\\text{ Luis es el menor y Pedro el mayor.}
+\\]
+\\[
+2L+3J+4P=740
+\\]
+\\[
+\\text{ La suma de Luis y Pedro es:}
+\\]
+`,
+opciones:[
+"a) 170",
+"b) 164",
+"c) 163",
+"d) 150",
+"e) 145"
+],
+correcta:1
+},
 
-        <div class="screen-content">
-          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px; text-align:center;">
-            Elige un rompecabezas sencillo 🧩
-          </p>
+{
+pregunta: `
+\\[
+59)\\text{ Si } f:\\mathbb{R}\\to\\mathbb{R}
+\\text{ definida por }
+f(x)=x|x-4|,
+\\]
+\\[
+\\text{ entonces es VERDAD que:}
+\\]
+`,
+opciones:[
+"a) \\(f\\) es impar",
+"b) \\(f\\) es inyectiva",
+"c) \\(f\\) es creciente",
+"d) \\(f\\) es acotada",
+"e) \\(f\\) es sobreyectiva"
+],
+correcta:4
+}
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
-            <div class="detail-card" onclick="openJuego('sudoku')">
-              <div style="font-size:2rem; text-align:center;">🔢</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Sudoku</div>
-            </div>
-
-            <div class="detail-card" onclick="openJuego('bloques')">
-              <div style="font-size:2rem; text-align:center;">🧱</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Bloques</div>
-            </div>
-
-            <div class="detail-card" onclick="openJuego('rubik')">
-              <div style="font-size:2rem; text-align:center;">🟩</div>
-              <div style="margin-top:6px; text-align:center; font-weight:600;">Cubo Rubik</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ✅ PANTALLA "ABRIR JUEGO" (REUTILIZABLE) -->
-      <div id="screen-abrirJuego" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('juegos')">←</button>
-          <span id="juego-titulo">Abrir</span>
-        </div>
-
-        <div class="screen-content" style="align-items:center; justify-content:center; text-align:center;">
-          <p id="juego-texto" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px; max-width:260px;"></p>
-
-          <div style="margin-bottom:18px;">
-            <div id="juego-icono" class="icon-btn" style="font-size:1.8rem;">🎮</div>
-          </div>
-
-          <button class="btn-main" onclick="abrirJuegoSeleccionado()">
-            Abrir ahora 🎮
-          </button>
-        </div>
-      </div>
-
-      <!-- PANTALLA RACHA -->
-      <div id="screen-racha" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('home')">←</button>
-          <span>Mi racha</span>
-        </div>
-
-        <div class="screen-content">
-          <div class="detail-card" style="display:flex; flex-direction:column; gap:12px;">
-            <div style="display:flex; align-items:center; justify-content:space-between;">
-              <div>
-                <div style="font-size:0.78rem; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase;">
-                  Racha actual
-                </div>
-                <div id="racha-count" style="font-size:2rem; font-weight:600; margin-top:4px;">0</div>
-              </div>
-              <div style="font-size:2.2rem;">🔥</div>
-            </div>
-
-            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">
-              Marca tu check-in diario para mantener tu racha. Si te saltas un día, vuelve a empezar.
-            </p>
-
-            <button id="racha-btn" class="btn-main" onclick="checkInRacha()">Marcar hoy ✅</button>
-
-            <div class="detail-section-title">Últimos 7 días</div>
-            <div id="racha-week" style="display:grid; grid-template-columns: repeat(7, 1fr); gap:8px;"></div>
-
-            <button class="btn-main secondary" onclick="resetRacha()">Reiniciar racha</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANTALLA RECETA DETALLE -->
-      <div id="screen-recetaDetalle" class="screen">
-        <div class="screen-header">
-          <button class="back-btn" onclick="openScreen('comida')">←</button>
-          <span>Receta</span>
-        </div>
-
-        <div class="screen-content recipe-detail-box">
-          <div class="detail-card">
-            <div id="detail-hero" class="detail-hero">🥗</div>
-
-            <div id="detail-title" class="detail-title">Título</div>
-            <div id="detail-meta" class="detail-meta"></div>
-
-            <div class="detail-section-title">Ingredientes</div>
-            <ul id="detail-ingredients" class="detail-list"></ul>
-
-            <div class="detail-section-title">Pasos</div>
-            <ol id="detail-steps" class="detail-list"></ol>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="credits">Prototipo web · MentalVibes</div>
-  </div>
-
-  <script>
-    function openScreen(name) {
-      const screens = document.querySelectorAll('.screen');
-      screens.forEach(s => s.classList.remove('active'));
-
-      switch (name) {
-        case 'home':
-          document.getElementById('screen-home').classList.add('active');
-          break;
-
-        case 'frase':
-          document.getElementById('screen-frase').classList.add('active');
-          nuevaFrase();
-          break;
-
-        case 'foro':
-          document.getElementById('screen-foro').classList.add('active');
-          break;
-
-        case 'sueno':
-          document.getElementById('screen-sueno').classList.add('active');
-          break;
-
-        case 'comida':
-          document.getElementById('screen-comida').classList.add('active');
-          setTimeout(renderRecetas, 0);
-          break;
-
-        case 'ritmo':
-          document.getElementById('screen-ritmo').classList.add('active');
-          setTimeout(renderCategoriasRutinas, 0);
-          break;
-
-        case 'rutinasLista':
-          document.getElementById('screen-rutinasLista').classList.add('active');
-          setTimeout(renderRutinasLista, 0);
-          break;
-
-        case 'rutinaDetalle':
-          document.getElementById('screen-rutinaDetalle').classList.add('active');
-          break;
-        case 'musica':
-          document.getElementById('screen-musica').classList.add('active');
-          setTimeout(renderPlaylists, 0);
-          break;
-
-        case 'playlist':
-          document.getElementById('screen-playlist').classList.add('active');
-          break;
-
-        case 'juegos':
-          document.getElementById('screen-juegos').classList.add('active');
-          break;
-
-        case 'puzzles':
-          document.getElementById('screen-puzzles').classList.add('active');
-          break;
-
-        case 'abrirJuego':
-          document.getElementById('screen-abrirJuego').classList.add('active');
-          break;
-
-        case 'recetaDetalle':
-          document.getElementById('screen-recetaDetalle').classList.add('active');
-          break;
-
-        case 'racha':
-          document.getElementById('screen-racha').classList.add('active');
-          setTimeout(renderRacha, 0);
-          break;
-      }
-    }
-
-    // FRASES
-    const frases = [
-      { texto: "Un día a la vez. Ya has superado días difíciles antes.", autor: "MentalVibes" },
-      { texto: "No tienes que hacerlo perfecto, solo tienes que hacerlo posible.", autor: "MentalVibes" },
-      { texto: "Tu valor no se mide por tus notas ni por tu productividad.", autor: "MentalVibes" },
-      { texto: "Descansar también es avanzar.", autor: "MentalVibes" },
-      { texto: "Está bien pedir ayuda. Nadie atraviesa la universidad en solitario.", autor: "MentalVibes" },
-      { texto: "Pequeños pasos sostenidos vencen a grandes esfuerzos de un solo día.", autor: "MentalVibes" },
-      { texto: "Hoy eres más fuerte que ayer, porque sigues aquí.", autor: "MentalVibes" },
-      { texto: "Tu salud mental es más importante que cualquier examen.", autor: "MentalVibes" },
-      { texto: "Lo estás haciendo mejor de lo que crees.", autor: "MentalVibes" }
-    ];
-
-    function nuevaFrase() {
-      const random = frases[Math.floor(Math.random() * frases.length)];
-      document.getElementById('frase-texto').textContent = random.texto;
-      document.getElementById('frase-autor').textContent = "— " + random.autor;
-    }
-
-    // FORO
-    const foroLista = document.getElementById('foro-lista');
-    const foroInput = document.getElementById('foro-input');
-    let foroEmpty = document.getElementById('foro-empty');
-    let contadorAnon = 1;
-
-    function publicar(e) {
-      e.preventDefault();
-      const texto = foroInput.value.trim();
-      if (!texto) return;
-
-      if (foroEmpty) {
-        foroEmpty.remove();
-        foroEmpty = null;
-      }
-
-      const post = document.createElement('div');
-      post.className = 'foro-post';
-
-      const contenido = document.createElement('div');
-      contenido.textContent = texto;
-      post.appendChild(contenido);
-
-      const meta = document.createElement('div');
-      meta.className = 'foro-meta';
-      meta.innerHTML = `<span>Anónimo ${contadorAnon}</span><span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>`;
-      contadorAnon++;
-
-      post.appendChild(meta);
-      foroLista.prepend(post);
-      foroInput.value = "";
-    }
-
-    // ✅ MÚSICA (MENÚ + EMBED DENTRO DE LA APP)
-let playlistActual = null;
-
-const playlists = [
-  {
-    id: "p1",
-    emoji: "🎧",
-    titulo: "Playlist 1",
-    desc: "Escucha dentro de la app.",
-    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2BRwIRg9nOSo9PldqJX31D?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-  },
-  {
-    id: "p2",
-    emoji: "🎶",
-    titulo: "Playlist 2",
-    desc: "Para concentrarte / estudiar.",
-    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/006nDhWONiodRpiIYvgxzx?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-  },
-  {
-    id: "p3",
-    emoji: "🌙",
-    titulo: "Playlist 3",
-    desc: "Relajación / calma.",
-    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6fUzotupnO3x2T5rdBglHd?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-  },
-  {
-    id: "p4",
-    emoji: "💿",
-    titulo: "Álbum (Spotify)",
-    desc: "Reproductor dentro de la app.",
-    iframe: `<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3wnuxUF9G1tJzhGVob5Z5m?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`
-  }
 ];
 
-function renderPlaylists(){
-  const cont = document.getElementById("music-cards");
-  const empty = document.getElementById("music-empty");
-  const q = (document.getElementById("music-search")?.value || "").toLowerCase().trim();
+let indice = 0;
+let puntaje = 0;
+let respondida = false;
 
-  const filtradas = playlists.filter(p =>
-    p.titulo.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
-  );
+function cargarPregunta(){
 
-  cont.innerHTML = "";
-  if(filtradas.length === 0){
-    empty.style.display = "block";
-    return;
-  }
-  empty.style.display = "none";
+    respondida = false;
 
-  filtradas.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "recipe-card";
-    card.onclick = () => abrirPlaylist(p.id);
+    document.getElementById("mensaje").innerHTML = "";
 
-    card.innerHTML = `
-      <div class="recipe-img">${p.emoji}</div>
-      <div class="recipe-body">
-        <div class="recipe-meta">
-          <span>SPOTIFY</span>
-          <span>EMBED</span>
-        </div>
-        <div class="recipe-title">${p.titulo}</div>
-        <div class="recipe-desc">${p.desc}</div>
-      </div>
+    const preguntaActual = preguntas[indice];
+
+    document.getElementById("pregunta").innerHTML =
+    preguntaActual.pregunta;
+
+    let opcionesHTML = "";
+
+    preguntaActual.opciones.forEach((opcion,i)=>{
+
+        opcionesHTML += `
+        <button class="opcion"
+        onclick="verificar(${i}, this)">
+        ${opcion}
+        </button>
+        `;
+    });
+
+    document.getElementById("opciones").innerHTML =
+    opcionesHTML;
+
+    MathJax.typeset();
+}
+
+function verificar(indiceSeleccionado, boton){
+
+    if(respondida) return;
+
+    respondida = true;
+
+    const mensaje =
+    document.getElementById("mensaje");
+
+    const botones =
+    document.querySelectorAll(".opcion");
+
+    botones.forEach(btn => {
+
+        btn.disabled = true;
+
+        btn.style.cursor = "not-allowed";
+
+        btn.style.opacity = "0.8";
+    });
+
+    if(indiceSeleccionado === preguntas[indice].correcta){
+
+        mensaje.innerHTML =
+        "✅ ¡Respuesta correcta!";
+
+        mensaje.className = "correcta";
+
+        boton.style.background =
+        "#b8f5b8";
+
+        puntaje++;
+
+    }
+
+    else{
+
+        mensaje.innerHTML =
+        "❌ Respuesta incorrecta";
+
+        mensaje.className =
+        "incorrecta";
+
+        boton.style.background =
+        "#ffb8b8";
+
+        botones[preguntas[indice].correcta]
+        .style.background = "#b8f5b8";
+    }
+}
+
+function siguientePregunta(){
+
+    indice++;
+
+    if(indice < preguntas.length){
+
+        cargarPregunta();
+
+    }else{
+
+        mostrarResultado();
+    }
+}
+
+function mostrarResultado(){
+
+    document.getElementById("pregunta").innerHTML = "";
+
+    document.getElementById("opciones").innerHTML = "";
+
+    document.getElementById("mensaje").innerHTML = "";
+
+    let nota =
+    (puntaje/preguntas.length)*10;
+
+    document.getElementById("resultadoFinal").innerHTML = `
+    🎓 Cuestionario finalizado <br><br>
+
+    ✅ Correctas:
+    ${puntaje} de ${preguntas.length}
+    <br><br>
+
+    📘 Nota final:
+    ${nota.toFixed(2)} / 10
     `;
-    cont.appendChild(card);
-  });
 }
 
-function abrirPlaylist(id){
-  playlistActual = playlists.find(p => p.id === id);
-  if(!playlistActual) return;
+cargarPregunta();
 
-  document.getElementById("playlist-title").textContent = playlistActual.titulo;
-  document.getElementById("playlist-hero").textContent = playlistActual.emoji;
+</script>
 
-  // Inserta el iframe dentro de la app
-  document.getElementById("playlist-embed").innerHTML = playlistActual.iframe;
-
-  openScreen("playlist");
-  document.querySelector("#screen-playlist .recipe-detail-box").scrollTop = 0;
-}
-
-
-    // ✅ MENÚ DE JUEGOS (categorías)
-    let juegoActual = null;
-
-    const juegos = {
-      tetris: {
-        nombre: "Tetris",
-        icono: "🧠",
-        linkAndroid: "https://play.google.com/store/search?q=tetris&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=tetris"
-      },
-      casual: {
-        nombre: "Juegos casuales / puzzle (tipo Flower)",
-        icono: "🎮",
-        linkAndroid: "https://play.google.com/store/search?q=relaxing%20puzzle%20game&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=relaxing%20puzzle%20game"
-      },
-      cozy: {
-        nombre: "Cozy games (relajantes)",
-        icono: "🌿",
-        linkAndroid: "https://play.google.com/store/search?q=cozy%20games&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=cozy%20games"
-      },
-      bienestar: {
-        nombre: "Juegos diseñados para bienestar",
-        icono: "🧘",
-        linkAndroid: "https://play.google.com/store/search?q=mental%20health%20relaxation%20game&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=mental%20health%20relaxation%20game"
-      },
-      asmr: {
-        nombre: "Apps de relajación / ASMR",
-        icono: "📱",
-        linkAndroid: "https://play.google.com/store/search?q=asmr%20relax&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=asmr%20relax"
-      },
-      sudoku: {
-        nombre: "Sudoku",
-        icono: "🔢",
-        linkAndroid: "https://play.google.com/store/search?q=sudoku&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=sudoku"
-      },
-      bloques: {
-        nombre: "Rompecabezas de bloques",
-        icono: "🧱",
-        linkAndroid: "https://play.google.com/store/search?q=block%20puzzle&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=block%20puzzle"
-      },
-      rubik: {
-        nombre: "Cubo de Rubik",
-        icono: "🟩",
-        linkAndroid: "https://play.google.com/store/search?q=rubik%20cube&c=apps",
-        linkIOS: "https://apps.apple.com/search?term=rubik%20cube"
-      }
-    };
-
-    function openJuego(id){
-      juegoActual = juegos[id];
-      if(!juegoActual) return;
-
-      document.getElementById("juego-titulo").textContent = "Abrir " + juegoActual.nombre;
-      document.getElementById("juego-texto").textContent =
-        "Pulsa el botón para abrir esta opción en la tienda y elegir la app que prefieras.";
-      document.getElementById("juego-icono").textContent = juegoActual.icono;
-
-      openScreen("abrirJuego");
-    }
-
-    function abrirJuegoSeleccionado(){
-      if(!juegoActual) return;
-
-      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const url = isIOS ? juegoActual.linkIOS : juegoActual.linkAndroid;
-
-      window.open(url, "_blank");
-    }
-
-    // ✅ RUTINAS (NUEVO: menú tipo Comida)
-    let categoriaRutinaActual = null;
-
-    const categoriasRutinas = [
-      { id: "energia", emoji: "⚡", titulo: "Energía (5–10 min)", desc: "Activación rápida para despejarte." },
-      { id: "estudio",  emoji: "📚", titulo: "Pausas de estudio", desc: "Movimientos suaves entre clases." },
-      { id: "cuello",   emoji: "💆", titulo: "Cuello y hombros", desc: "Tensión por pantalla y postura." },
-      { id: "espalda",  emoji: "🧍", titulo: "Espalda y postura", desc: "Alineación y movilidad." },
-      { id: "piernas",  emoji: "🦵", titulo: "Piernas (sin impacto)", desc: "Circulación y descanso." },
-      { id: "respira",  emoji: "🌬️", titulo: "Respiración / calma", desc: "Bajar revoluciones en 3–6 min." },
-    ];
-
-    const rutinas = [
-      {
-        id: 1,
-        cat: "energia",
-        emoji: "⚡",
-        titulo: "Activación express",
-        dur: "7 min",
-        nivel: "Suave",
-        pasos: [
-          "30s: marchar en el lugar.",
-          "30s: círculos de brazos (suave).",
-          "6 rep: sentadilla corta (sin bajar mucho).",
-          "30s: rodillas arriba suave.",
-          "30s: estiramiento lateral (derecha/izquierda).",
-          "1 min: respiración lenta."
-        ],
-        tip: "Si estás sentado hace mucho, empieza más suave y aumenta poco a poco."
-      },
-      {
-        id: 2,
-        cat: "estudio",
-        emoji: "📚",
-        titulo: "Pausa 5 minutos",
-        dur: "5 min",
-        nivel: "Muy suave",
-        pasos: [
-          "1 min: caminar por tu habitación.",
-          "30s: estirar pantorrillas (cada lado).",
-          "30s: apertura de pecho (manos atrás).",
-          "1 min: estirar espalda (gato-vaca de pie).",
-          "1 min: respiración 4-4 (inhalo 4, exhalo 4)."
-        ],
-        tip: "Haz esta pausa cada 45–60 min de estudio."
-      },
-      {
-        id: 3,
-        cat: "cuello",
-        emoji: "💆",
-        titulo: "Cuello & hombros",
-        dur: "6 min",
-        nivel: "Suave",
-        pasos: [
-          "30s: mentón hacia el pecho (sin forzar).",
-          "30s: oreja al hombro (derecha/izquierda).",
-          "8 rep: encoger hombros arriba/abajo.",
-          "8 rep: círculos de hombros hacia atrás.",
-          "30s: estirar trapecio (cada lado).",
-          "1 min: respiración lenta."
-        ],
-        tip: "No gires el cuello fuerte; todo debe sentirse cómodo."
-      },
-      {
-        id: 4,
-        cat: "espalda",
-        emoji: "🧍",
-        titulo: "Postura y espalda",
-        dur: "8 min",
-        nivel: "Suave",
-        pasos: [
-          "1 min: estiramiento de pecho en marco de puerta.",
-          "8 rep: bisagra de cadera (como reverencia).",
-          "8 rep: gato-vaca (de pie apoyado en muslos).",
-          "30s: estirar espalda (brazos al frente).",
-          "30s: torsión suave (derecha/izquierda).",
-          "1 min: respiración."
-        ],
-        tip: "Mantén abdomen suave activado para proteger zona lumbar."
-      },
-      {
-        id: 5,
-        cat: "piernas",
-        emoji: "🦵",
-        titulo: "Piernas sin impacto",
-        dur: "9 min",
-        nivel: "Moderado suave",
-        pasos: [
-          "1 min: caminar en el lugar.",
-          "8 rep: elevar talones (pantorrilla).",
-          "8 rep: sentadilla corta.",
-          "30s: estirar cuádriceps (cada lado).",
-          "30s: estirar isquios (pierna al frente).",
-          "1 min: respiración."
-        ],
-        tip: "Si te mareas, baja la intensidad y respira más lento."
-      },
-      {
-        id: 6,
-        cat: "respira",
-        emoji: "🌬️",
-        titulo: "Calma en 4 minutos",
-        dur: "4 min",
-        nivel: "Muy suave",
-        pasos: [
-          "1 min: inhalo 4 / exhalo 6.",
-          "1 min: hombros relajados, mandíbula suelta.",
-          "1 min: escaneo corporal (de cabeza a pies).",
-          "1 min: inhalo 4 / exhalo 6."
-        ],
-        tip: "Si te cuesta, prueba exhalar un poquito más largo que inhalar."
-      }
-    ];
-
-    function renderCategoriasRutinas(){
-      const cont = document.getElementById("rutina-categorias");
-      const empty = document.getElementById("rutina-empty");
-      const q = (document.getElementById("rutina-search")?.value || "").toLowerCase().trim();
-
-      const filtradas = categoriasRutinas.filter(c =>
-        c.titulo.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)
-      );
-
-      cont.innerHTML = "";
-      if(filtradas.length === 0){
-        empty.style.display = "block";
-        return;
-      }
-      empty.style.display = "none";
-
-      filtradas.forEach(c => {
-        const card = document.createElement("div");
-        card.className = "recipe-card";
-        card.onclick = () => abrirCategoriaRutina(c.id);
-
-        card.innerHTML = `
-          <div class="recipe-img">${c.emoji}</div>
-          <div class="recipe-body">
-            <div class="recipe-meta">
-              <span>CATEGORÍA</span>
-              <span>RUTINAS</span>
-            </div>
-            <div class="recipe-title">${c.titulo}</div>
-            <div class="recipe-desc">${c.desc}</div>
-          </div>
-        `;
-        cont.appendChild(card);
-      });
-    }
-
-    function abrirCategoriaRutina(catId){
-      categoriaRutinaActual = catId;
-      const cat = categoriasRutinas.find(c => c.id === catId);
-      document.getElementById("rutinasLista-titulo").textContent = cat ? cat.titulo : "Rutinas";
-      document.getElementById("rutina-lista-search").value = "";
-      openScreen("rutinasLista");
-    }
-
-    function renderRutinasLista(){
-      const cont = document.getElementById("rutina-lista-cards");
-      const empty = document.getElementById("rutina-lista-empty");
-      const q = (document.getElementById("rutina-lista-search")?.value || "").toLowerCase().trim();
-
-      const filtradas = rutinas
-        .filter(r => r.cat === categoriaRutinaActual)
-        .filter(r => r.titulo.toLowerCase().includes(q) || r.nivel.toLowerCase().includes(q) || r.dur.toLowerCase().includes(q));
-
-      cont.innerHTML = "";
-      if(filtradas.length === 0){
-        empty.style.display = "block";
-        return;
-      }
-      empty.style.display = "none";
-
-      filtradas.forEach(r => {
-        const card = document.createElement("div");
-        card.className = "recipe-card";
-        card.onclick = () => abrirDetalleRutina(r.id);
-
-        card.innerHTML = `
-          <div class="recipe-img">${r.emoji}</div>
-          <div class="recipe-body">
-            <div class="recipe-meta">
-              <span>DUR: ${r.dur}</span>
-              <span>${r.nivel}</span>
-            </div>
-            <div class="recipe-title">${r.titulo}</div>
-            <div class="recipe-desc">Rutina guiada y simple para hacer en casa.</div>
-          </div>
-        `;
-        cont.appendChild(card);
-      });
-    }
-
-    function abrirDetalleRutina(id){
-      const rutina = rutinas.find(r => r.id === id);
-      if(!rutina) return;
-
-      document.getElementById("rutina-hero").textContent = rutina.emoji;
-      document.getElementById("rutina-title").textContent = rutina.titulo;
-      document.getElementById("rutina-meta").innerHTML = `
-        <span>DUR: ${rutina.dur}</span>
-        <span>NIVEL: ${rutina.nivel}</span>
-      `;
-
-      const steps = document.getElementById("rutina-steps");
-      steps.innerHTML = "";
-      rutina.pasos.forEach(p => {
-        const li = document.createElement("li");
-        li.textContent = p;
-        steps.appendChild(li);
-      });
-
-      document.getElementById("rutina-tip").textContent = rutina.tip || "";
-
-      openScreen("rutinaDetalle");
-      document.querySelector("#screen-rutinaDetalle .recipe-detail-box").scrollTop = 0;
-    }
-
-    // ====== RECETAS ======
-    const recetas = [
-      {
-        id: 1,
-        emoji: "🥑",
-        titulo: "Avocado Toast",
-        prep: "10 min",
-        cook: "5 min",
-        desc: "Pan integral + aguacate + tomate cherry.",
-        ingredientes: ["2 rebanadas de pan integral","1 aguacate","6 tomates cherry","Sal y pimienta","Opcional: limón"],
-        pasos: ["Tostar el pan.","Aplastar el aguacate y sazonar.","Agregar tomates cherry encima.","Servir y disfrutar."]
-      },
-      {
-        id: 2,
-        emoji: "🥗",
-        titulo: "Ensalada Griega",
-        prep: "15 min",
-        cook: "0 min",
-        desc: "Lechuga + queso + aceitunas + aceite de oliva.",
-        ingredientes: ["Lechuga o espinaca","Tomate","Pepino","Queso feta (opcional)","Aceitunas","Aceite de oliva y sal"],
-        pasos: ["Picar vegetales.","Mezclar en un bowl.","Agregar feta y aceitunas.","Aliñar con aceite de oliva y sal."]
-      },
-      {
-        id: 3,
-        emoji: "🍚",
-        titulo: "Bowl Pollo + Brócoli",
-        prep: "10 min",
-        cook: "15 min",
-        desc: "Arroz + pollo salteado + brócoli.",
-        ingredientes: ["1 taza de arroz cocido","150g de pollo","1 taza de brócoli","Salsa de soya (opcional)","Sal y pimienta"],
-        pasos: ["Cocinar el brócoli al vapor o salteado.","Cocinar el pollo en sartén.","Servir con arroz y mezclar.","Agregar salsa si deseas."]
-      },
-      {
-        id: 4,
-        emoji: "🍌",
-        titulo: "Yogurt Bowl",
-        prep: "5 min",
-        cook: "0 min",
-        desc: "Yogurt + banana + granola + frutos secos.",
-        ingredientes: ["1 taza de yogurt natural","1 banana","2 cucharadas de granola","Frutos secos","Opcional: miel"],
-        pasos: ["Colocar yogurt en un bowl.","Agregar banana en rodajas.","Añadir granola y frutos secos.","Opcional: un toque de miel."]
-      },
-      {
-        id: 5,
-        emoji: "🥪",
-        titulo: "Sándwich de Atún",
-        prep: "8 min",
-        cook: "0 min",
-        desc: "Atún + pan integral + vegetales.",
-        ingredientes: ["Pan integral","1 lata de atún","Yogurt o mayonesa (poco)","Lechuga","Tomate","Sal y pimienta"],
-        pasos: ["Mezclar atún con una cucharada de yogurt/mayo.","Armar el sándwich con vegetales.","Cortar y servir."]
-      },
-      {
-        id: 6,
-        emoji: "🍳",
-        titulo: "Huevos Rev. + Espinaca",
-        prep: "5 min",
-        cook: "7 min",
-        desc: "Proteína rápida para estudiar con energía.",
-        ingredientes: ["2 huevos","1 puñado de espinaca","Sal y pimienta","Opcional: queso rallado"],
-        pasos: ["Batir huevos con sal y pimienta.","Saltear espinaca 1 minuto.","Agregar huevo y revolver hasta listo.","Servir caliente."]
-      }
-    ];
-
-    function renderRecetas() {
-      const cont = document.getElementById("recipe-cards");
-      const empty = document.getElementById("recipe-empty");
-      const q = (document.getElementById("recipe-search")?.value || "").toLowerCase().trim();
-
-      const filtradas = recetas.filter(r =>
-        r.titulo.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q)
-      );
-
-      cont.innerHTML = "";
-
-      if (filtradas.length === 0) {
-        empty.style.display = "block";
-        return;
-      }
-      empty.style.display = "none";
-
-      filtradas.forEach(r => {
-        const card = document.createElement("div");
-        card.className = "recipe-card";
-        card.onclick = () => abrirDetalleReceta(r.id);
-
-        card.innerHTML = `
-          <div class="recipe-img">${r.emoji}</div>
-          <div class="recipe-body">
-            <div class="recipe-meta">
-              <span>PREP: ${r.prep}</span>
-              <span>COOK: ${r.cook}</span>
-            </div>
-            <div class="recipe-title">${r.titulo}</div>
-            <div class="recipe-desc">${r.desc}</div>
-          </div>
-        `;
-
-        cont.appendChild(card);
-      });
-    }
-
-    function abrirDetalleReceta(id) {
-      const receta = recetas.find(r => r.id === id);
-      if (!receta) return;
-
-      document.getElementById("detail-hero").textContent = receta.emoji;
-      document.getElementById("detail-title").textContent = receta.titulo;
-      document.getElementById("detail-meta").innerHTML = `
-        <span>PREP: ${receta.prep}</span>
-        <span>COOK: ${receta.cook}</span>
-      `;
-
-      const ing = document.getElementById("detail-ingredients");
-      ing.innerHTML = "";
-      receta.ingredientes.forEach(i => {
-        const li = document.createElement("li");
-        li.textContent = i;
-        ing.appendChild(li);
-      });
-
-      const steps = document.getElementById("detail-steps");
-      steps.innerHTML = "";
-      receta.pasos.forEach(p => {
-        const li = document.createElement("li");
-        li.textContent = p;
-        steps.appendChild(li);
-      });
-
-      openScreen("recetaDetalle");
-      document.querySelector("#screen-recetaDetalle .recipe-detail-box").scrollTop = 0;
-    }
-
-    // ====== RACHA ======
-    function todayKey() {
-      const d = new Date();
-      return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
-    }
-
-    function getRachaData(){
-      return JSON.parse(localStorage.getItem("mv_racha") || '{"count":0,"last":null,"days":[]}');
-    }
-
-    function setRachaData(data){
-      localStorage.setItem("mv_racha", JSON.stringify(data));
-    }
-
-    function daysDiff(a, b){
-      const ms = (new Date(b).setHours(0,0,0,0)) - (new Date(a).setHours(0,0,0,0));
-      return Math.round(ms / (1000*60*60*24));
-    }
-
-    function renderRacha(){
-      const data = getRachaData();
-      document.getElementById("racha-count").textContent = data.count;
-
-      const btn = document.getElementById("racha-btn");
-      const t = todayKey();
-      const already = data.days.includes(t);
-
-      btn.textContent = already ? "Hoy ya está marcado ✅" : "Marcar hoy ✅";
-      btn.disabled = already;
-      btn.style.opacity = already ? "0.7" : "1";
-      btn.style.cursor = already ? "not-allowed" : "pointer";
-
-      const week = document.getElementById("racha-week");
-      week.innerHTML = "";
-      for(let i=6;i>=0;i--){
-        const d = new Date();
-        d.setDate(d.getDate()-i);
-        const key = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
-        const label = d.toLocaleDateString("es-EC",{weekday:"short"}).replace(".","");
-        const box = document.createElement("div");
-        box.className = "week-day" + (data.days.includes(key) ? " done" : "");
-        box.innerHTML = `<div style="font-size:0.68rem; opacity:0.9;">${label}</div><div style="font-size:0.72rem; margin-top:4px;">${String(d.getDate()).padStart(2,"0")}</div>`;
-        week.appendChild(box);
-      }
-    }
-
-    function checkInRacha(){
-      const data = getRachaData();
-      const t = todayKey();
-
-      if(!data.last){
-        data.count = 1;
-      } else {
-        const diff = daysDiff(data.last, t);
-        if(diff === 1){
-          data.count += 1;
-        } else if(diff > 1){
-          data.count = 1;
-          data.days = [];
-        }
-      }
-
-      data.last = t;
-      if(!data.days.includes(t)) data.days.push(t);
-      data.days = data.days.slice(-30);
-
-      setRachaData(data);
-      renderRacha();
-    }
-
-    function resetRacha(){
-      setRachaData({count:0,last:null,days:[]});
-      renderRacha();
-    }
-  </script>
 </body>
 </html>
-
